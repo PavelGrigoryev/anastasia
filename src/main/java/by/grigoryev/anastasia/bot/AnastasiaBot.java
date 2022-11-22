@@ -78,27 +78,17 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         log.warn("{} action: {}", user.getFirstName(), action);
 
         switch (action) {
-            case "quiz" -> {
-                telegramUserService.save(callbackQuery).subscribe();
-                addEditMessage(callbackQuery, telegramButtonsService.quizGameFirstButtons(user.getFirstName()),
-                    "Как вас зовут?");
-            }
-            case "first" -> addEditMessage(callbackQuery, telegramButtonsService.quizGameSecondButtons(),
-                    "Вы ещё помните своё имя! Потрясающе!\nСледующий вопрос: Что является национальным животным Шотландии?");
-            case "second", "third" -> addEditMessage(callbackQuery, telegramButtonsService.quizGameFirstButtons(user.getFirstName()),
-                    "Это не ваше имя!");
-            case "unicorn" -> addEditMessage(callbackQuery, telegramButtonsService.quizGameThirdButtons(),
-                    """
-                            Глубокая связь Шотландии с единорогом берет свое начало в кельтской культуре.
-                            Согласно кельтской мифологии, единороги олицетворяют невинность и чистоту,
-                            а также ассоциируются с рыцарством, гордостью и смелостью.
-                            Следующий вопрос: Какой вкус у Куантро?""");
-            case "horse", "wolf" -> addEditMessage(callbackQuery, telegramButtonsService.quizGameSecondButtons(),
-                    "Не верно!\nПодумайте лучше!\nЧто является национальным животным Шотландии?");
-            case "orange" -> addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(), "Ура вы победили!" +
-                    "\nКуантро - это ликер с апельсиновым вкусом, который впервые был продан в 1875 году.");
-            case "lemon", "basilica" -> addEditMessage(callbackQuery, telegramButtonsService.quizGameThirdButtons(),
-                    "Не верно!\nПодумайте лучше!\nКакой вкус у Куантро?");
+            case "newYear" -> telegramUserService.save(callbackQuery).subscribe(telegramUserDto ->
+                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
+                            "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?"));
+            case "next1", "previous3" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
+                    "Для чего сотрудникам компаний нужны Новогодние корпоративы?");
+            case "next2", "previous4" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
+                    "Будет ли в этом году в вашей компании празднование Нового года?");
+            case "next3" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
+                    "Что вам больше всего не нравится на новогодних корпоративах?");
+            case "previous2" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
+                    "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
             default -> sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
         }

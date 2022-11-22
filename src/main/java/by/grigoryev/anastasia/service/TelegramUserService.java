@@ -1,11 +1,11 @@
 package by.grigoryev.anastasia.service;
 
-import by.grigoryev.anastasia.dto.TelegramUserDto;
+import by.grigoryev.anastasia.model.TelegramUser;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import reactor.core.publisher.Mono;
 
 public interface TelegramUserService {
 
-    Mono<TelegramUserDto> save(CallbackQuery callbackQuery);
+    Mono<TelegramUser> save(CallbackQuery callbackQuery);
 
 }

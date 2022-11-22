@@ -6,10 +6,12 @@ public interface TelegramButtonsService {
 
     InlineKeyboardMarkup addMainButtons();
 
-    InlineKeyboardMarkup quizGameFirstButtons(String message);
+    InlineKeyboardMarkup newYearTestFirstButtons();
 
-    InlineKeyboardMarkup quizGameSecondButtons();
+    InlineKeyboardMarkup newYearTestSecondButtons();
 
-    InlineKeyboardMarkup quizGameThirdButtons();
+    InlineKeyboardMarkup newYearTestThirdButtons();
+
+    InlineKeyboardMarkup newYearTestFourthButtons();
 
 }
