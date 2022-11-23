@@ -77,34 +77,32 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         log.warn("{} action: {}", user.getFirstName(), action);
 
         switch (action) {
-            case "newYear", "2/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                    "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
+            case "newYear" ->
+                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
+                            "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
 
-            case "1/next", "3/previous" ->
-                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
-                            "Для чего сотрудникам компаний нужны Новогодние корпоративы?");
-
-            case "2/next", "4/previous" ->
+            case "next" ->
                     addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
                             "Будет ли в этом году в вашей компании празднование Нового года?");
-
-            case "3/next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
-                    "Что вам больше всего не нравится на новогодних корпоративах?");
 
             case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
                     telegramUserService.save(callbackQuery, action).subscribe(newYearTest ->
                             addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
-                                    "Для чего сотрудникам компаний нужны Новогодние корпоративы?"));
+                                    "Для чего сотрудникам компаний нужны Новогодние корпоративы?" +
+                                            "\n⚠ Можно выбрать несколько вариантов!"));
 
-            case "3/1", "3/2", "3/3", "3/4", "3/5" ->
+            case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
+                    "4/10", "4/11", "4/12", "4/13", "4/14" ->
                     telegramUserService.save(callbackQuery, action).subscribe(newYearTest ->
-                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
-                                    "Что вам больше всего не нравится на новогодних корпоративах?"));
+                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
+                                    "Что вам больше всего не нравится на новогодних корпоративах?" +
+                                            "\n⚠ Можно выбрать несколько вариантов!"));
 
-            case "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9", "4/10", "4/11", "4/12", "4/13",
-                    "4/14" -> telegramUserService.save(callbackQuery, action)
-                    .subscribe(newYearTest -> addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
-                            "Главное меню! Пользователь : " + user.getFirstName()));
+            case "end" -> {
+                telegramButtonsService.clearKeys();
+                addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
+                        "Главное меню! Пользователь : " + user.getFirstName());
+            }
 
             default -> sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");

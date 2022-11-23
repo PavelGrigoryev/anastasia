@@ -1,6 +1,7 @@
 package by.grigoryev.anastasia.service.impl;
 
 import by.grigoryev.anastasia.service.TelegramButtonsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -11,11 +12,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class TelegramButtonsServiceImpl implements TelegramButtonsService {
 
-    public static final String NEXT_QUESTION = "Следующий вопрос ➡";
-    public static final String PREVIOUS_QUESTION = "Предыдущий вопрос ⬅";
     @Value("${api.url}")
     private String url;
 
@@ -62,7 +62,6 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         buttons.put("1/3", "3️⃣  Не знаю");
         buttons.put("1/4", "4️⃣  Скорее, нет");
         buttons.put("1/5", "5️⃣  Нет");
-        buttons.put("1/next", NEXT_QUESTION);
 
         createButtons(buttons, buttonList);
 
@@ -74,8 +73,6 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        keys.add(key);
-
         buttons.put("2/1", "1️⃣  Они сближают сотрудников");
         buttons.put("2/2", "2️⃣  Улучшают их коммуникацию в дальнейшем");
         buttons.put("2/3", "3️⃣  Повышают лояльность сотрудников к компании");
@@ -85,10 +82,14 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         buttons.put("2/7", "7️⃣  Неформально подвести итоги года");
         buttons.put("2/8", "8️⃣  Чисто побухать и оттянуться по полной на халяву");
         buttons.put("2/9", "9️⃣  Сотрудникам не нужны Новогодние корпоративы");
-        buttons.put("2/next", NEXT_QUESTION);
-        buttons.put("2/previous", PREVIOUS_QUESTION);
+        if (key.equals("2/1") || key.equals("2/2") || key.equals("2/3") || key.equals("2/4") || key.equals("2/5") ||
+                key.equals("2/6") || key.equals("2/7") || key.equals("2/8") || key.equals("2/9")) {
+            buttons.put("next", "\uD83D\uDEAB Перейти к следующему вопросу");
+            keys.add(key);
+        }
 
         keys.forEach(buttons::remove);
+        log.warn("2" + keys);
 
         createButtons(buttons, buttonList);
 
@@ -105,8 +106,6 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         buttons.put("3/3", "3️⃣  Не знаю");
         buttons.put("3/4", "4️⃣  Скорее, нет");
         buttons.put("3/5", "5️⃣  Нет");
-        buttons.put("3/next", NEXT_QUESTION);
-        buttons.put("3/previous", PREVIOUS_QUESTION);
 
         createButtons(buttons, buttonList);
 
@@ -114,7 +113,7 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
     }
 
     @Override
-    public InlineKeyboardMarkup newYearTestFourthButtons() {
+    public InlineKeyboardMarkup newYearTestFourthButtons(String key) {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
@@ -132,11 +131,25 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         buttons.put("4/12", "1️⃣2️⃣  Нетрезвый начальник");
         buttons.put("4/13", "1️⃣3️⃣  Недвусмысленные приставания коллег");
         buttons.put("4/14", "1️⃣4️⃣  Другое");
-        buttons.put("4/previous", PREVIOUS_QUESTION);
+        if (key.equals("4/1") || key.equals("4/2") || key.equals("4/3") || key.equals("4/4") || key.equals("4/5") ||
+                key.equals("4/6") || key.equals("4/7") || key.equals("4/8") || key.equals("4/9") || key.equals("4/10")
+                || key.equals("4/11") || key.equals("4/12") || key.equals("4/13") || key.equals("4/14")) {
+            buttons.put("end", "\uD83D\uDEAB Закончить тест и получить результаты!");
+            keys.add(key);
+        }
+
+        keys.forEach(buttons::remove);
+        log.warn("4" + keys);
 
         createButtons(buttons, buttonList);
 
         return buildInlineKeyboardMarkup(buttonList);
+    }
+
+    @Override
+    public void clearKeys() {
+        keys.clear();
+        log.warn("After clear " + keys);
     }
 
     private static void createButtons(Map<String, String> buttons, List<InlineKeyboardButton> buttonList) {
