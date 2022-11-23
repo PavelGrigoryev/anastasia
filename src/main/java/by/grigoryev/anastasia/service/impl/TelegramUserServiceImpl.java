@@ -22,7 +22,7 @@ public class TelegramUserServiceImpl implements TelegramUserService {
     public Mono<TelegramUser> save(CallbackQuery callbackQuery) {
         TelegramUser telegramUser = createTelegramUser(callbackQuery);
         return telegramUserRepository.save(telegramUser)
-                .log("save");
+                .log("TelegramUserServiceImpl save");
     }
 
     private static TelegramUser createTelegramUser(CallbackQuery callbackQuery) {

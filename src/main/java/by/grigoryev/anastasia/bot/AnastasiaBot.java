@@ -1,5 +1,6 @@
 package by.grigoryev.anastasia.bot;
 
+import by.grigoryev.anastasia.service.NewYearTestService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
 import by.grigoryev.anastasia.service.TelegramUserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     private final TelegramButtonsService telegramButtonsService;
 
     private final TelegramUserService telegramUserService;
+
+    private final NewYearTestService newYearTestService;
 
     @Override
     public String getBotUsername() {
@@ -81,14 +84,26 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "newYear" -> telegramUserService.save(callbackQuery).subscribe(telegramUserDto ->
                     addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
                             "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?"));
-            case "1/next", "3/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
-                    "Для чего сотрудникам компаний нужны Новогодние корпоративы?");
-            case "2/next", "4/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
-                    "Будет ли в этом году в вашей компании празднование Нового года?");
+
+            case "1/next", "3/previous" ->
+                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
+                            "Для чего сотрудникам компаний нужны Новогодние корпоративы?");
+
+            case "2/next", "4/previous" ->
+                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
+                            "Будет ли в этом году в вашей компании празднование Нового года?");
+
             case "3/next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
                     "Что вам больше всего не нравится на новогодних корпоративах?");
+
             case "2/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
                     "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
+
+            case "1. Да", "2. Скорее, да", "3. Не знаю", "4. Скорее, нет", "5. Нет" ->
+                    newYearTestService.save(callbackQuery, 1, action).subscribe(newYearTest ->
+                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
+                                    "Для чего сотрудникам компаний нужны Новогодние корпоративы?"));
+
             default -> sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
         }
