@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface TelegramUserService {
 
-    Mono<TelegramUser> save(CallbackQuery callbackQuery);
+    Mono<TelegramUser> save(CallbackQuery callbackQuery, String answer);
 
 }

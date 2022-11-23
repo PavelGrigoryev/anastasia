@@ -32,6 +32,8 @@ public class TelegramUser {
     @Column("last_name")
     private String lastName;
 
+    private String answer;
+
     @Column("time_of_registration")
     private LocalDateTime timeOfRegistration;
 

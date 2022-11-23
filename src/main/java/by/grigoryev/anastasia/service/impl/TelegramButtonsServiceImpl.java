@@ -19,6 +19,8 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
     @Value("${api.url}")
     private String url;
 
+    private final List<String> keys = new ArrayList<>();
+
     @Override
     public InlineKeyboardMarkup addMainButtons() {
 
@@ -55,12 +57,12 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Да", "1/1");
-        buttons.put("2️⃣  Скорее, да", "1/2");
-        buttons.put("3️⃣  Не знаю", "1/3");
-        buttons.put("4️⃣  Скорее, нет", "1/4");
-        buttons.put("5️⃣  Нет", "1/5");
-        buttons.put(NEXT_QUESTION, "1/next");
+        buttons.put("1/1", "1️⃣  Да");
+        buttons.put("1/2", "2️⃣  Скорее, да");
+        buttons.put("1/3", "3️⃣  Не знаю");
+        buttons.put("1/4", "4️⃣  Скорее, нет");
+        buttons.put("1/5", "5️⃣  Нет");
+        buttons.put("1/next", NEXT_QUESTION);
 
         createButtons(buttons, buttonList);
 
@@ -68,21 +70,25 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
     }
 
     @Override
-    public InlineKeyboardMarkup newYearTestSecondButtons() {
+    public InlineKeyboardMarkup newYearTestSecondButtons(String key) {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Они сближают сотрудников", "2/1");
-        buttons.put("2️⃣  Улучшают их коммуникацию в дальнейшем", "2/2");
-        buttons.put("3️⃣  Повышают лояльность сотрудников к компании", "2/3");
-        buttons.put("4️⃣  Позволяют чувствовать себя единой командой", "2/4");
-        buttons.put("5️⃣  Позволяют пообщаться в неформальной обстановке", "2/5");
-        buttons.put("6️⃣  Это награда от компании за хорошую работу", "2/6");
-        buttons.put("7️⃣  Неформально подвести итоги года", "2/7");
-        buttons.put("8️⃣  Чисто побухать и оттянуться по полной на халяву", "2/8");
-        buttons.put("9️⃣  Сотрудникам не нужны Новогодние корпоративы", "2/9");
-        buttons.put(NEXT_QUESTION, "2/next");
-        buttons.put(PREVIOUS_QUESTION, "2/previous");
+        keys.add(key);
+
+        buttons.put("2/1", "1️⃣  Они сближают сотрудников");
+        buttons.put("2/2", "2️⃣  Улучшают их коммуникацию в дальнейшем");
+        buttons.put("2/3", "3️⃣  Повышают лояльность сотрудников к компании");
+        buttons.put("2/4", "4️⃣  Позволяют чувствовать себя единой командой");
+        buttons.put("2/5", "5️⃣  Позволяют пообщаться в неформальной обстановке");
+        buttons.put("2/6", "6️⃣  Это награда от компании за хорошую работу");
+        buttons.put("2/7", "7️⃣  Неформально подвести итоги года");
+        buttons.put("2/8", "8️⃣  Чисто побухать и оттянуться по полной на халяву");
+        buttons.put("2/9", "9️⃣  Сотрудникам не нужны Новогодние корпоративы");
+        buttons.put("2/next", NEXT_QUESTION);
+        buttons.put("2/previous", PREVIOUS_QUESTION);
+
+        keys.forEach(buttons::remove);
 
         createButtons(buttons, buttonList);
 
@@ -94,13 +100,13 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Да", "3/1");
-        buttons.put("2️⃣  Скорее, да", "3/2");
-        buttons.put("3️⃣  Не знаю", "3/3");
-        buttons.put("4️⃣  Скорее, нет", "3/4");
-        buttons.put("5️⃣  Нет", "3/5");
-        buttons.put(NEXT_QUESTION, "3/next");
-        buttons.put(PREVIOUS_QUESTION, "3/previous");
+        buttons.put("3/1", "1️⃣  Да");
+        buttons.put("3/2", "2️⃣  Скорее, да");
+        buttons.put("3/3", "3️⃣  Не знаю");
+        buttons.put("3/4", "4️⃣  Скорее, нет");
+        buttons.put("3/5", "5️⃣  Нет");
+        buttons.put("3/next", NEXT_QUESTION);
+        buttons.put("3/previous", PREVIOUS_QUESTION);
 
         createButtons(buttons, buttonList);
 
@@ -112,21 +118,21 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Мне всё не нравится на корпоративах", "4/1");
-        buttons.put("2️⃣  Не нравится сдавать деньги на корпоративы", "4/2");
-        buttons.put("3️⃣  Не нравится принимать участие в конкурсах", "4/3");
-        buttons.put("4️⃣  Не люблю говорить тосты", "4/4");
-        buttons.put("5️⃣  Не трезвые коллеги", "4/5");
-        buttons.put("6️⃣  Невозможно как следует расслабиться", "4/6");
-        buttons.put("7️⃣  Невозможность прийти со второй половинкой", "4/7");
-        buttons.put("8️⃣  Беспокойство о том, как я выгляжу и что надеть", "4/8");
-        buttons.put("9️⃣  Мне всегда скучно на таких праздниках", "4/9");
-        buttons.put("1️⃣0️⃣  Отсутствие возможности отказаться от участия в корпоративе", "4/10");
-        buttons.put("1️⃣1️⃣  Слишком много людей", "4/11");
-        buttons.put("1️⃣2️⃣  Нетрезвый начальник", "4/12");
-        buttons.put("1️⃣3️⃣  Недвусмысленные приставания коллег", "4/13");
-        buttons.put("1️⃣4️⃣  Другое", "4/14");
-        buttons.put(PREVIOUS_QUESTION, "4/previous");
+        buttons.put("4/1", "1️⃣  Мне всё не нравится на корпоративах");
+        buttons.put("4/2", "2️⃣  Не нравится сдавать деньги на корпоративы");
+        buttons.put("4/3", "3️⃣  Не нравится принимать участие в конкурсах");
+        buttons.put("4/4", "4️⃣  Не люблю говорить тосты");
+        buttons.put("4/5", "5️⃣  Не трезвые коллеги");
+        buttons.put("4/6", "6️⃣  Невозможно как следует расслабиться");
+        buttons.put("4/7", "7️⃣  Невозможность прийти со второй половинкой");
+        buttons.put("4/8", "8️⃣  Беспокойство о том, как я выгляжу и что надеть");
+        buttons.put("4/9", "9️⃣  Мне всегда скучно на таких праздниках");
+        buttons.put("4/10", "1️⃣0️⃣  Отсутствие возможности отказаться от участия в корпоративе");
+        buttons.put("4/11", "1️⃣1️⃣  Слишком много людей");
+        buttons.put("4/12", "1️⃣2️⃣  Нетрезвый начальник");
+        buttons.put("4/13", "1️⃣3️⃣  Недвусмысленные приставания коллег");
+        buttons.put("4/14", "1️⃣4️⃣  Другое");
+        buttons.put("4/previous", PREVIOUS_QUESTION);
 
         createButtons(buttons, buttonList);
 
@@ -134,10 +140,10 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
     }
 
     private static void createButtons(Map<String, String> buttons, List<InlineKeyboardButton> buttonList) {
-        buttons.forEach((s1, s2) -> {
+        buttons.forEach((k, v) -> {
             InlineKeyboardButton button = InlineKeyboardButton.builder()
-                    .text(s1)
-                    .callbackData(s2)
+                    .text(v)
+                    .callbackData(k)
                     .build();
             buttonList.add(button);
         });

@@ -1,6 +1,5 @@
 package by.grigoryev.anastasia.bot;
 
-import by.grigoryev.anastasia.service.NewYearTestService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
 import by.grigoryev.anastasia.service.TelegramUserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -33,8 +31,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     private final TelegramButtonsService telegramButtonsService;
 
     private final TelegramUserService telegramUserService;
-
-    private final NewYearTestService newYearTestService;
 
     @Override
     public String getBotUsername() {
@@ -81,12 +77,11 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         log.warn("{} action: {}", user.getFirstName(), action);
 
         switch (action) {
-            case "newYear" -> telegramUserService.save(callbackQuery).subscribe(telegramUserDto ->
-                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                            "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?"));
+            case "newYear", "2/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
+                    "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
 
             case "1/next", "3/previous" ->
-                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
+                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                             "Для чего сотрудникам компаний нужны Новогодние корпоративы?");
 
             case "2/next", "4/previous" ->
@@ -96,26 +91,18 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "3/next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
                     "Что вам больше всего не нравится на новогодних корпоративах?");
 
-            case "2/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                    "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
-
-            case "1/1", "1/2", "1/3", "1/4", "1/5" ->
-                    newYearTestService.save(callbackQuery, action).subscribe(newYearTest ->
-                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
+            case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
+                    telegramUserService.save(callbackQuery, action).subscribe(newYearTest ->
+                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                                     "Для чего сотрудникам компаний нужны Новогодние корпоративы?"));
 
-            case "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
-                    newYearTestService.save(callbackQuery, action).subscribe(newYearTest ->
-                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
-                                    "Будет ли в этом году в вашей компании празднование Нового года?"));
-
             case "3/1", "3/2", "3/3", "3/4", "3/5" ->
-                    newYearTestService.save(callbackQuery, action).subscribe(newYearTest ->
+                    telegramUserService.save(callbackQuery, action).subscribe(newYearTest ->
                             addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
                                     "Что вам больше всего не нравится на новогодних корпоративах?"));
 
             case "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9", "4/10", "4/11", "4/12", "4/13",
-                    "4/14" -> newYearTestService.save(callbackQuery, action)
+                    "4/14" -> telegramUserService.save(callbackQuery, action)
                     .subscribe(newYearTest -> addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
                             "Главное меню! Пользователь : " + user.getFirstName()));
 
@@ -137,11 +124,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 .chatId(callbackQuery.getFrom().getId())
                 .messageId(callbackQuery.getMessage().getMessageId())
                 .text(text)
-                .build());
-
-        execute(EditMessageReplyMarkup.builder()
-                .chatId(callbackQuery.getFrom().getId())
-                .messageId(callbackQuery.getMessage().getMessageId())
                 .replyMarkup(inlineKeyboardMarkup)
                 .build());
     }

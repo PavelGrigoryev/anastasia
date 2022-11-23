@@ -26,34 +26,11 @@ databaseChangeLog:
                   name: last_name
                   type: varchar(30)
               - column:
+                  name: answer
+                  type: varchar(255)
+              - column:
                   name: time_of_registration
                   type: timestamp
               - column:
                   name: language_code
                   type: varchar(30)
-  - changeSet:
-      id: create-telegram-new-year-test
-      author: Pavel Grigoryev
-      changes:
-        - createTable:
-            tableName: new_year_tests
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    unique: true
-              - column:
-                  name: telegram_id
-                  type: bigint
-              - column:
-                  name: telegram_user_first_name
-                  type: varchar(30)
-              - column:
-                  name: answer
-                  type: varchar(255)
-              - column:
-                  name: time_of_answer
-                  type: timestamp

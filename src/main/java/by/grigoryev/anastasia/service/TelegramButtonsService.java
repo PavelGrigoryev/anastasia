@@ -8,7 +8,7 @@ public interface TelegramButtonsService {
 
     InlineKeyboardMarkup newYearTestFirstButtons();
 
-    InlineKeyboardMarkup newYearTestSecondButtons();
+    InlineKeyboardMarkup newYearTestSecondButtons(String key);
 
     InlineKeyboardMarkup newYearTestThirdButtons();
 
