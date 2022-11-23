@@ -55,12 +55,12 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Да", "firstAnswer1");
-        buttons.put("2️⃣  Скорее, да", "secondAnswer1");
-        buttons.put("3️⃣  Не знаю", "thirdAnswer1");
-        buttons.put("4️⃣  Скорее, нет", "fourthAnswer1");
-        buttons.put("5️⃣  Нет", "fifthAnswer1");
-        buttons.put(NEXT_QUESTION, "next1");
+        buttons.put("1️⃣  Да", "1/1");
+        buttons.put("2️⃣  Скорее, да", "1/2");
+        buttons.put("3️⃣  Не знаю", "1/3");
+        buttons.put("4️⃣  Скорее, нет", "1/4");
+        buttons.put("5️⃣  Нет", "1/5");
+        buttons.put(NEXT_QUESTION, "1/next");
 
         createButtons(buttons, buttonList);
 
@@ -72,17 +72,17 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Они сближают сотрудников", "firstAnswer2");
-        buttons.put("2️⃣  Улучшают их коммуникацию в дальнейшем", "secondAnswer2");
-        buttons.put("3️⃣  Повышают лояльность сотрудников к компании", "thirdAnswer2");
-        buttons.put("4️⃣  Позволяют чувствовать себя единой командой", "fourthAnswer2");
-        buttons.put("5️⃣  Позволяют пообщаться в неформальной обстановке", "fifthAnswer2");
-        buttons.put("6️⃣  Это награда от компании за хорошую работу", "sixthAnswer2");
-        buttons.put("7️⃣  Неформально подвести итоги года", "sevensAnswer2");
-        buttons.put("8️⃣  Чисто побухать и оттянуться по полной на халяву", "eightsAnswer2");
-        buttons.put("9️⃣  Сотрудникам не нужны Новогодние корпоративы", "ninesAnswer2");
-        buttons.put(NEXT_QUESTION, "next2");
-        buttons.put(PREVIOUS_QUESTION, "previous2");
+        buttons.put("1️⃣  Они сближают сотрудников", "2/1");
+        buttons.put("2️⃣  Улучшают их коммуникацию в дальнейшем", "2/2");
+        buttons.put("3️⃣  Повышают лояльность сотрудников к компании", "2/3");
+        buttons.put("4️⃣  Позволяют чувствовать себя единой командой", "2/4");
+        buttons.put("5️⃣  Позволяют пообщаться в неформальной обстановке", "2/5");
+        buttons.put("6️⃣  Это награда от компании за хорошую работу", "2/6");
+        buttons.put("7️⃣  Неформально подвести итоги года", "2/7");
+        buttons.put("8️⃣  Чисто побухать и оттянуться по полной на халяву", "2/8");
+        buttons.put("9️⃣  Сотрудникам не нужны Новогодние корпоративы", "2/9");
+        buttons.put(NEXT_QUESTION, "2/next");
+        buttons.put(PREVIOUS_QUESTION, "2/previous");
 
         createButtons(buttons, buttonList);
 
@@ -94,13 +94,13 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Да", "firstAnswer3");
-        buttons.put("2️⃣  Скорее, да", "secondAnswer3");
-        buttons.put("3️⃣  Не знаю", "thirdAnswer3");
-        buttons.put("4️⃣  Скорее, нет", "fourthAnswer3");
-        buttons.put("5️⃣  Нет", "fifthAnswer3");
-        buttons.put(NEXT_QUESTION, "next3");
-        buttons.put(PREVIOUS_QUESTION, "previous3");
+        buttons.put("1️⃣  Да", "3/1");
+        buttons.put("2️⃣  Скорее, да", "3/2");
+        buttons.put("3️⃣  Не знаю", "3/3");
+        buttons.put("4️⃣  Скорее, нет", "3/4");
+        buttons.put("5️⃣  Нет", "3/5");
+        buttons.put(NEXT_QUESTION, "3/next");
+        buttons.put(PREVIOUS_QUESTION, "3/previous");
 
         createButtons(buttons, buttonList);
 
@@ -112,21 +112,21 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Мне всё не нравится на корпоративах", "firstAnswer4");
-        buttons.put("2️⃣  Не нравится сдавать деньги на корпоративы", "secondAnswer4");
-        buttons.put("3️⃣  Не нравится принимать участие в конкурсах", "thirdAnswer4");
-        buttons.put("4️⃣  Не люблю говорить тосты", "fourthAnswer4");
-        buttons.put("5️⃣  Не трезвые коллеги", "fifthAnswer4");
-        buttons.put("6️⃣  Невозможно как следует расслабиться", "sixthAnswer4");
-        buttons.put("7️⃣  Невозможность прийти со второй половинкой", "seventhAnswer4");
-        buttons.put("8️⃣  Беспокойство о том, как я выгляжу и что надеть", "eightsAnswer4");
-        buttons.put("9️⃣  Мне всегда скучно на таких праздниках", "ninthAnswer4");
-        buttons.put("1️⃣0️⃣  Отсутствие возможности отказаться от участия в корпоративе", "tenthAnswer4");
-        buttons.put("1️⃣1️⃣  Слишком много людей", "eleventhAnswer4");
-        buttons.put("1️⃣2️⃣  Нетрезвый начальник", "twelfthAnswer4");
-        buttons.put("1️⃣3️⃣  Недвусмысленные приставания коллег", "thirteenthAnswer4");
-        buttons.put("1️⃣4️⃣  Другое", "fourteenthAnswer4");
-        buttons.put(PREVIOUS_QUESTION, "previous4");
+        buttons.put("1️⃣  Мне всё не нравится на корпоративах", "4/1");
+        buttons.put("2️⃣  Не нравится сдавать деньги на корпоративы", "4/2");
+        buttons.put("3️⃣  Не нравится принимать участие в конкурсах", "4/3");
+        buttons.put("4️⃣  Не люблю говорить тосты", "4/4");
+        buttons.put("5️⃣  Не трезвые коллеги", "4/5");
+        buttons.put("6️⃣  Невозможно как следует расслабиться", "4/6");
+        buttons.put("7️⃣  Невозможность прийти со второй половинкой", "4/7");
+        buttons.put("8️⃣  Беспокойство о том, как я выгляжу и что надеть", "4/8");
+        buttons.put("9️⃣  Мне всегда скучно на таких праздниках", "4/9");
+        buttons.put("1️⃣0️⃣  Отсутствие возможности отказаться от участия в корпоративе", "4/10");
+        buttons.put("1️⃣1️⃣  Слишком много людей", "4/11");
+        buttons.put("1️⃣2️⃣  Нетрезвый начальник", "4/12");
+        buttons.put("1️⃣3️⃣  Недвусмысленные приставания коллег", "4/13");
+        buttons.put("1️⃣4️⃣  Другое", "4/14");
+        buttons.put(PREVIOUS_QUESTION, "4/previous");
 
         createButtons(buttons, buttonList);
 
