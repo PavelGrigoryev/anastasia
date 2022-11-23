@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface NewYearTestService {
 
-    Mono<NewYearTest> save(CallbackQuery callbackQuery, Integer questionNumber, String answer);
+    Mono<NewYearTest> save(CallbackQuery callbackQuery, String answer);
 
 }

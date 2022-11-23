@@ -26,9 +26,6 @@ public class NewYearTest {
     @Column("telegram_user_first_name")
     private String telegramUserFirstName;
 
-    @Column("question_number")
-    private Integer questionNumber;
-
     private String answer;
 
     @Column("time_of_answer")

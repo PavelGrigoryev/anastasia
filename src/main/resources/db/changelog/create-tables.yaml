@@ -52,9 +52,6 @@ databaseChangeLog:
                   name: telegram_user_first_name
                   type: varchar(30)
               - column:
-                  name: question_number
-                  type: int
-              - column:
                   name: answer
                   type: varchar(255)
               - column:

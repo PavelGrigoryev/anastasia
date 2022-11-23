@@ -18,18 +18,17 @@ public class NewYearTestServiceImpl implements NewYearTestService {
     private final NewYearTestRepository newYearTestRepository;
 
     @Override
-    public Mono<NewYearTest> save(CallbackQuery callbackQuery, Integer questionNumber, String answer) {
-        NewYearTest newYearTest = createNewYearTest(callbackQuery, questionNumber, answer);
+    public Mono<NewYearTest> save(CallbackQuery callbackQuery, String answer) {
+        NewYearTest newYearTest = createNewYearTest(callbackQuery, answer);
         return newYearTestRepository.save(newYearTest)
                 .log("NewYearTestServiceImpl save");
     }
 
-    private static NewYearTest createNewYearTest(CallbackQuery callbackQuery, Integer questionNumber, String answer) {
+    private static NewYearTest createNewYearTest(CallbackQuery callbackQuery, String answer) {
         User user = callbackQuery.getFrom();
         return NewYearTest.builder()
                 .telegramUserId(user.getId())
                 .telegramUserFirstName(user.getFirstName())
-                .questionNumber(questionNumber)
                 .answer(answer)
                 .timeOfAnswer(LocalDateTime.now())
                 .build();

@@ -55,11 +55,11 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1️⃣  Да", "1. Да");
-        buttons.put("2️⃣  Скорее, да", "2. Скорее, да");
-        buttons.put("3️⃣  Не знаю", "3. Не знаю");
-        buttons.put("4️⃣  Скорее, нет", "4. Скорее, нет");
-        buttons.put("5️⃣  Нет", "5. Нет");
+        buttons.put("1️⃣  Да", "1/1");
+        buttons.put("2️⃣  Скорее, да", "1/2");
+        buttons.put("3️⃣  Не знаю", "1/3");
+        buttons.put("4️⃣  Скорее, нет", "1/4");
+        buttons.put("5️⃣  Нет", "1/5");
         buttons.put(NEXT_QUESTION, "1/next");
 
         createButtons(buttons, buttonList);

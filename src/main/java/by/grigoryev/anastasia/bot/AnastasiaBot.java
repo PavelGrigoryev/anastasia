@@ -99,10 +99,25 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "2/previous" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
                     "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
 
-            case "1. Да", "2. Скорее, да", "3. Не знаю", "4. Скорее, нет", "5. Нет" ->
-                    newYearTestService.save(callbackQuery, 1, action).subscribe(newYearTest ->
+            case "1/1", "1/2", "1/3", "1/4", "1/5" ->
+                    newYearTestService.save(callbackQuery, action).subscribe(newYearTest ->
                             addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(),
                                     "Для чего сотрудникам компаний нужны Новогодние корпоративы?"));
+
+            case "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
+                    newYearTestService.save(callbackQuery, action).subscribe(newYearTest ->
+                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
+                                    "Будет ли в этом году в вашей компании празднование Нового года?"));
+
+            case "3/1", "3/2", "3/3", "3/4", "3/5" ->
+                    newYearTestService.save(callbackQuery, action).subscribe(newYearTest ->
+                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(),
+                                    "Что вам больше всего не нравится на новогодних корпоративах?"));
+
+            case "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9", "4/10", "4/11", "4/12", "4/13",
+                    "4/14" -> newYearTestService.save(callbackQuery, action)
+                    .subscribe(newYearTest -> addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
+                            "Главное меню! Пользователь : " + user.getFirstName()));
 
             default -> sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
