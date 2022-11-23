@@ -23,25 +23,22 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
     public InlineKeyboardMarkup addMainButtons() {
 
         InlineKeyboardButton main = InlineKeyboardButton.builder()
-                .text("Главная страница")
-                .callbackData("main")
+                .text("Главная страница \uD83C\uDFE2")
                 .url(url)
                 .build();
 
         InlineKeyboardButton register = InlineKeyboardButton.builder()
-                .text("Регистрация")
-                .callbackData("register")
+                .text("Регистрация \uD83D\uDCBE")
                 .url(url + "/register/")
                 .build();
 
         InlineKeyboardButton enter = InlineKeyboardButton.builder()
-                .text("Вход")
-                .callbackData("enter")
+                .text("Вход \uD83D\uDEAA")
                 .url(url + "/login/")
                 .build();
 
         InlineKeyboardButton newYear = InlineKeyboardButton.builder()
-                .text("Новый год тест")
+                .text("Новый год тест \uD83C\uDF84")
                 .callbackData("newYear")
                 .build();
 
@@ -58,11 +55,11 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("Да", "firstAnswer1");
-        buttons.put("Скорее, да", "secondAnswer1");
-        buttons.put("Не знаю", "thirdAnswer1");
-        buttons.put("Скорее, нет", "fourthAnswer1");
-        buttons.put("Нет", "fifthAnswer1");
+        buttons.put("1️⃣  Да", "firstAnswer1");
+        buttons.put("2️⃣  Скорее, да", "secondAnswer1");
+        buttons.put("3️⃣  Не знаю", "thirdAnswer1");
+        buttons.put("4️⃣  Скорее, нет", "fourthAnswer1");
+        buttons.put("5️⃣  Нет", "fifthAnswer1");
         buttons.put(NEXT_QUESTION, "next1");
 
         createButtons(buttons, buttonList);
@@ -75,15 +72,15 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("Они сближают сотрудников", "firstAnswer2");
-        buttons.put("Улучшают их коммуникацию в дальнейшем", "secondAnswer2");
-        buttons.put("Повышают лояльность сотрудников к компании", "thirdAnswer2");
-        buttons.put("Позволяют чувствовать себя единой командой", "fourthAnswer2");
-        buttons.put("Позволяют пообщаться в неформальной обстановке", "fifthAnswer2");
-        buttons.put("Это награда от компании за хорошую работу", "sixthAnswer2");
-        buttons.put("Неформально подвести итоги года", "sevensAnswer2");
-        buttons.put("Чисто побухать и оттянуться по полной на халяву", "eightsAnswer2");
-        buttons.put("Сотрудникам не нужны Новогодние корпоративы", "ninesAnswer2");
+        buttons.put("1️⃣  Они сближают сотрудников", "firstAnswer2");
+        buttons.put("2️⃣  Улучшают их коммуникацию в дальнейшем", "secondAnswer2");
+        buttons.put("3️⃣  Повышают лояльность сотрудников к компании", "thirdAnswer2");
+        buttons.put("4️⃣  Позволяют чувствовать себя единой командой", "fourthAnswer2");
+        buttons.put("5️⃣  Позволяют пообщаться в неформальной обстановке", "fifthAnswer2");
+        buttons.put("6️⃣  Это награда от компании за хорошую работу", "sixthAnswer2");
+        buttons.put("7️⃣  Неформально подвести итоги года", "sevensAnswer2");
+        buttons.put("8️⃣  Чисто побухать и оттянуться по полной на халяву", "eightsAnswer2");
+        buttons.put("9️⃣  Сотрудникам не нужны Новогодние корпоративы", "ninesAnswer2");
         buttons.put(NEXT_QUESTION, "next2");
         buttons.put(PREVIOUS_QUESTION, "previous2");
 
@@ -97,11 +94,11 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("Да", "firstAnswer3");
-        buttons.put("Скорее, да", "secondAnswer3");
-        buttons.put("Не знаю", "thirdAnswer3");
-        buttons.put("Скорее, нет", "fourthAnswer3");
-        buttons.put("Нет", "fifthAnswer3");
+        buttons.put("1️⃣  Да", "firstAnswer3");
+        buttons.put("2️⃣  Скорее, да", "secondAnswer3");
+        buttons.put("3️⃣  Не знаю", "thirdAnswer3");
+        buttons.put("4️⃣  Скорее, нет", "fourthAnswer3");
+        buttons.put("5️⃣  Нет", "fifthAnswer3");
         buttons.put(NEXT_QUESTION, "next3");
         buttons.put(PREVIOUS_QUESTION, "previous3");
 
@@ -115,20 +112,20 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("Мне всё не нравится на корпоративах", "firstAnswer4");
-        buttons.put("Не нравится сдавать деньги на корпоративы", "secondAnswer4");
-        buttons.put("Не нравится принимать участие в конкурсах", "thirdAnswer4");
-        buttons.put("Не люблю говорить тосты", "fourthAnswer4");
-        buttons.put("Не трезвые коллеги", "fifthAnswer4");
-        buttons.put("Невозможно как следует расслабиться", "sixthAnswer4");
-        buttons.put("Невозможность прийти со второй половинкой", "seventhAnswer4");
-        buttons.put("Беспокойство о том, как я выгляжу и что надеть", "eightsAnswer4");
-        buttons.put("Мне всегда скучно на таких праздниках", "ninthAnswer4");
-        buttons.put("Отсутствие возможности отказаться от участия в корпоративе", "tenthAnswer4");
-        buttons.put("Слишком много людей", "eleventhAnswer4");
-        buttons.put("Нетрезвый начальник", "twelfthAnswer4");
-        buttons.put("Недвусмысленные приставания коллег", "thirteenthAnswer4");
-        buttons.put("Другое", "fourteenthAnswer4");
+        buttons.put("1️⃣  Мне всё не нравится на корпоративах", "firstAnswer4");
+        buttons.put("2️⃣  Не нравится сдавать деньги на корпоративы", "secondAnswer4");
+        buttons.put("3️⃣  Не нравится принимать участие в конкурсах", "thirdAnswer4");
+        buttons.put("4️⃣  Не люблю говорить тосты", "fourthAnswer4");
+        buttons.put("5️⃣  Не трезвые коллеги", "fifthAnswer4");
+        buttons.put("6️⃣  Невозможно как следует расслабиться", "sixthAnswer4");
+        buttons.put("7️⃣  Невозможность прийти со второй половинкой", "seventhAnswer4");
+        buttons.put("8️⃣  Беспокойство о том, как я выгляжу и что надеть", "eightsAnswer4");
+        buttons.put("9️⃣  Мне всегда скучно на таких праздниках", "ninthAnswer4");
+        buttons.put("1️⃣0️⃣  Отсутствие возможности отказаться от участия в корпоративе", "tenthAnswer4");
+        buttons.put("1️⃣1️⃣  Слишком много людей", "eleventhAnswer4");
+        buttons.put("1️⃣2️⃣  Нетрезвый начальник", "twelfthAnswer4");
+        buttons.put("1️⃣3️⃣  Недвусмысленные приставания коллег", "thirteenthAnswer4");
+        buttons.put("1️⃣4️⃣  Другое", "fourteenthAnswer4");
         buttons.put(PREVIOUS_QUESTION, "previous4");
 
         createButtons(buttons, buttonList);
