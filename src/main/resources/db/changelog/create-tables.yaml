@@ -16,8 +16,6 @@ databaseChangeLog:
               - column:
                   name: telegram_id
                   type: bigint
-                  constraints:
-                    unique: true
               - column:
                   name: user_name
                   type: varchar(30)
@@ -56,6 +54,3 @@ databaseChangeLog:
               - column:
                   name: telegram_user_id
                   type: bigint
-                  constraints:
-                    foreignKeyName: fk_telegram_user_answers
-                    references: telegram_users(telegram_id)
