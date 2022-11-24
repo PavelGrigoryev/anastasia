@@ -1,7 +1,6 @@
 package by.grigoryev.anastasia.service.impl;
 
 import by.grigoryev.anastasia.service.TelegramButtonsService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -12,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Service
 public class TelegramButtonsServiceImpl implements TelegramButtonsService {
 
@@ -89,7 +87,6 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         }
 
         keys.forEach(buttons::remove);
-        log.warn("2" + keys);
 
         createButtons(buttons, buttonList);
 
@@ -139,7 +136,6 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         }
 
         keys.forEach(buttons::remove);
-        log.warn("4" + keys);
 
         createButtons(buttons, buttonList);
 
@@ -149,7 +145,6 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
     @Override
     public void clearKeys() {
         keys.clear();
-        log.warn("After clear " + keys);
     }
 
     private static void createButtons(Map<String, String> buttons, List<InlineKeyboardButton> buttonList) {

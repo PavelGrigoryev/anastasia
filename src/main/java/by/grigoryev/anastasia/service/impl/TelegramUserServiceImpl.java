@@ -19,20 +19,19 @@ public class TelegramUserServiceImpl implements TelegramUserService {
     private final TelegramUserRepository telegramUserRepository;
 
     @Override
-    public Mono<TelegramUser> save(CallbackQuery callbackQuery, String answer) {
-        TelegramUser telegramUser = createTelegramUser(callbackQuery, answer);
+    public Mono<TelegramUser> save(CallbackQuery callbackQuery) {
+        TelegramUser telegramUser = createTelegramUser(callbackQuery);
         return telegramUserRepository.save(telegramUser)
                 .log("TelegramUserServiceImpl save");
     }
 
-    private static TelegramUser createTelegramUser(CallbackQuery callbackQuery, String answer) {
+    private static TelegramUser createTelegramUser(CallbackQuery callbackQuery) {
         User user = callbackQuery.getFrom();
         return TelegramUser.builder()
-                .telegramUserId(user.getId())
+                .telegramId(user.getId())
                 .userName(user.getUserName())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .answer(answer)
                 .timeOfRegistration(LocalDateTime.now())
                 .languageCode(user.getLanguageCode())
                 .build();

@@ -14,28 +14,19 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("telegram_users")
-public class TelegramUser {
+@Table("telegram_answers")
+public class Answer {
 
     @Id
     private Long id;
 
-    @Column("telegram_id")
-    private Long telegramId;
+    @Column("answer")
+    private String message;
 
-    @Column("user_name")
-    private String userName;
+    @Column("time_of_answer")
+    private LocalDateTime timeOfAnswer;
 
-    @Column("first_name")
-    private String firstName;
-
-    @Column("last_name")
-    private String lastName;
-
-    @Column("time_of_registration")
-    private LocalDateTime timeOfRegistration;
-
-    @Column("language_code")
-    private String languageCode;
+    @Column("telegram_user_id")
+    private Long telegramUserId;
 
 }

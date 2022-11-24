@@ -1,5 +1,6 @@
 package by.grigoryev.anastasia.bot;
 
+import by.grigoryev.anastasia.service.AnswerService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
 import by.grigoryev.anastasia.service.TelegramUserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
     private final TelegramUserService telegramUserService;
 
+    private final AnswerService answerService;
+
     @Override
     public String getBotUsername() {
         return botName;
@@ -60,7 +63,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         if (message.hasText()) {
 
             if ("/menu".equals(text) || "/start".equals(text)) {
-                sendMenu(user.getId(), "Главное меню! Пользователь : " + user.getFirstName());
+                sendMenu(user.getId(), "Главное меню! Пользователь :  " + user.getFirstName());
             } else {
                 sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
                         + "!\nДоступно пока только меню :\n/menu");
@@ -77,23 +80,22 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         log.warn("{} action: {}", user.getFirstName(), action);
 
         switch (action) {
-            case "newYear" ->
+            case "newYear" -> telegramUserService.save(callbackQuery).subscribe(telegramUser ->
                     addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                            "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
+                            "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?"));
 
-            case "next" ->
-                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
-                            "Будет ли в этом году в вашей компании празднование Нового года?");
+            case "next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
+                    "Будет ли в этом году в вашей компании празднование Нового года?");
 
             case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
-                    telegramUserService.save(callbackQuery, action).subscribe(newYearTest ->
+                    answerService.save(callbackQuery, action).subscribe(answer ->
                             addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                                     "Для чего сотрудникам компаний нужны Новогодние корпоративы?" +
                                             "\n⚠ Можно выбрать несколько вариантов!"));
 
             case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
                     "4/10", "4/11", "4/12", "4/13", "4/14" ->
-                    telegramUserService.save(callbackQuery, action).subscribe(newYearTest ->
+                    answerService.save(callbackQuery, action).subscribe(answer ->
                             addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
                                     "Что вам больше всего не нравится на новогодних корпоративах?" +
                                             "\n⚠ Можно выбрать несколько вариантов!"));
@@ -101,7 +103,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "end" -> {
                 telegramButtonsService.clearKeys();
                 addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
-                        "Главное меню! Пользователь : " + user.getFirstName());
+                        "Главное меню! Пользователь :  " + user.getFirstName());
             }
 
             default -> sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
