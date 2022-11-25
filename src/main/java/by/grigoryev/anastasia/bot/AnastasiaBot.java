@@ -91,22 +91,21 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
                     "\uD83E\uDD73 Будет ли в этом году в вашей компании празднование Нового года? \uD83C\uDF89");
 
-            case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" -> {
-                answerService.save(callbackQuery, action).subscribe(a ->
+            case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
+                    answerService.save(callbackQuery, action).subscribe(a -> {
                         addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                                 "\uD83E\uDD73 Для чего сотрудникам компаний нужны Новогодние корпоративы? \uD83E\uDD73" +
-                                        "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89"));
-                resultsBuilderService.buildResults(action, user.getFirstName());
-            }
+                                        "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
+                        resultsBuilderService.buildResults(action, user.getFirstName()).subscribe();
+                    });
 
             case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
-                    "4/10", "4/11", "4/12", "4/13", "4/14" -> {
-                answerService.save(callbackQuery, action).subscribe(a ->
-                        addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
-                                "\uD83E\uDD73 Что вам больше всего не нравится на новогодних корпоративах? \uD83E\uDD73" +
-                                        "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89"));
-                resultsBuilderService.buildResults(action, user.getFirstName());
-            }
+                    "4/10", "4/11", "4/12", "4/13", "4/14" -> answerService.save(callbackQuery, action).subscribe(a -> {
+                addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
+                        "\uD83E\uDD73 Что вам больше всего не нравится на новогодних корпоративах? \uD83E\uDD73" +
+                                "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
+                resultsBuilderService.buildResults(action, user.getFirstName()).subscribe();
+            });
 
             case "end" -> {
                 telegramButtonsService.clearKeys();
