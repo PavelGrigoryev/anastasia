@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -14,22 +12,17 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("telegram_answers")
+@Document(collection = "telegram_answers")
 public class Answer {
 
-    @Id
-    private Long id;
+    private String id;
 
-    @Column("first_name")
     private String firstName;
 
-    @Column("answer")
     private String message;
 
-    @Column("test_start_time")
     private LocalDateTime testStartTime;
 
-    @Column("telegram_user_id")
     private Long telegramUserId;
 
 }

@@ -6,7 +6,6 @@ import by.grigoryev.anastasia.repository.TelegramUserRepository;
 import by.grigoryev.anastasia.service.AnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.User;
 import reactor.core.publisher.Mono;
 
@@ -19,8 +18,7 @@ public class AnswerServiceImpl implements AnswerService {
     private final TelegramUserRepository telegramUserRepository;
 
     @Override
-    public Mono<Answer> save(CallbackQuery callbackQuery, String message) {
-        User user = callbackQuery.getFrom();
+    public Mono<Answer> save(User user, String message) {
         return telegramUserRepository.findFirstByTelegramIdOrderByTimeOfRegistrationDesc(user.getId())
                 .flatMap(telegramUser -> {
                     Answer answer = Answer.builder()
