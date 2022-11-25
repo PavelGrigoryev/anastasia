@@ -46,10 +46,13 @@ databaseChangeLog:
                     primaryKey: true
                     unique: true
               - column:
+                  name: first_name
+                  type: varchar(30)
+              - column:
                   name: answer
                   type: varchar(255)
               - column:
-                  name: time_of_answer
+                  name: test_start_time
                   type: timestamp
               - column:
                   name: telegram_user_id

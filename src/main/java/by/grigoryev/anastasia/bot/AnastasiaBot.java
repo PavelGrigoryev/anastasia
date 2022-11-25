@@ -18,6 +18,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -34,6 +37,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     private final TelegramUserService telegramUserService;
 
     private final AnswerService answerService;
+
+    private final List<String> results = new ArrayList<>();
 
     @Override
     public String getBotUsername() {
@@ -63,13 +68,13 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         if (message.hasText()) {
 
             if ("/menu".equals(text) || "/start".equals(text)) {
-                sendMenu(user.getId(), "Главное меню! Пользователь :  " + user.getFirstName());
+                sendMenu(user.getId(), "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
             } else {
-                sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
+                sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                         + "!\nДоступно пока только меню :\n/menu");
             }
         } else {
-            sendText(user.getId(), "Извините, доступны только текстовые команды...");
+            sendText(user.getId(), "\uD83C\uDF89 Извините, доступны только текстовые команды...");
         }
     }
 
@@ -82,31 +87,70 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         switch (action) {
             case "newYear" -> telegramUserService.save(callbackQuery).subscribe(telegramUser ->
                     addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                            "Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?"));
+                            "\uD83E\uDD73 Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы? \uD83C\uDF89"));
 
             case "next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
-                    "Будет ли в этом году в вашей компании празднование Нового года?");
+                    "\uD83E\uDD73 Будет ли в этом году в вашей компании празднование Нового года? \uD83C\uDF89");
 
-            case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" ->
-                    answerService.save(callbackQuery, action).subscribe(answer ->
-                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
-                                    "Для чего сотрудникам компаний нужны Новогодние корпоративы?" +
-                                            "\n⚠ Можно выбрать несколько вариантов!"));
+            case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" -> {
+                results.add(action);
+                answerService.save(callbackQuery, action).subscribe(answer ->
+                        addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
+                                "\uD83E\uDD73 Для чего сотрудникам компаний нужны Новогодние корпоративы? \uD83E\uDD73" +
+                                        "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89"));
+            }
 
             case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
-                    "4/10", "4/11", "4/12", "4/13", "4/14" ->
-                    answerService.save(callbackQuery, action).subscribe(answer ->
-                            addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
-                                    "Что вам больше всего не нравится на новогодних корпоративах?" +
-                                            "\n⚠ Можно выбрать несколько вариантов!"));
+                    "4/10", "4/11", "4/12", "4/13", "4/14" -> {
+                results.add(action);
+                answerService.save(callbackQuery, action).subscribe(answer ->
+                        addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
+                                "\uD83E\uDD73 Что вам больше всего не нравится на новогодних корпоративах? \uD83E\uDD73" +
+                                        "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89"));
+            }
 
             case "end" -> {
                 telegramButtonsService.clearKeys();
                 addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
-                        "Главное меню! Пользователь :  " + user.getFirstName());
+                        "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
+                StringBuilder resultsBuilder = new StringBuilder();
+                String question = " на вопрос № ";
+                String answer = " выбрал ответ № ";
+                results.forEach(s -> {
+                    if (s.startsWith("1")) {
+                        resultsBuilder.append(user.getFirstName())
+                                .append(question)
+                                .append(s.charAt(0))
+                                .append(answer)
+                                .append(s.substring(2));
+                    } else if (s.startsWith("2")) {
+                        resultsBuilder.append("\n")
+                                .append(user.getFirstName())
+                                .append(question)
+                                .append(s.charAt(0))
+                                .append(answer)
+                                .append(s.substring(2));
+                    } else if (s.startsWith("3")) {
+                        resultsBuilder.append("\n")
+                                .append(user.getFirstName())
+                                .append(question)
+                                .append(s.charAt(0))
+                                .append(answer)
+                                .append(s.substring(2));
+                    } else if (s.startsWith("4")) {
+                        resultsBuilder.append("\n")
+                                .append(user.getFirstName())
+                                .append(question)
+                                .append(s.charAt(0))
+                                .append(answer)
+                                .append(s.substring(2));
+                    }
+                });
+                sendText(user.getId(), resultsBuilder.toString());
+                results.clear();
             }
 
-            default -> sendText(user.getId(), "Приветствую вас, " + user.getFirstName()
+            default -> sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
         }
 
@@ -129,7 +173,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     }
 
     @SneakyThrows
-    public void sendText(Long who, String what) {
+    private void sendText(Long who, String what) {
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(who.toString())
                 .text(what)
@@ -139,7 +183,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     }
 
     @SneakyThrows
-    public void sendMenu(Long who, String what) {
+    private void sendMenu(Long who, String what) {
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(who.toString())
                 .text(what)

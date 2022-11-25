@@ -21,13 +21,13 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Mono<Answer> save(CallbackQuery callbackQuery, String message) {
         User user = callbackQuery.getFrom();
-
         return telegramUserRepository.findFirstByTelegramIdOrderByTimeOfRegistrationDesc(user.getId())
                 .flatMap(telegramUser -> {
                     Answer answer = Answer.builder()
+                            .firstName(telegramUser.getFirstName())
                             .message(message)
-                            .timeOfAnswer(telegramUser.getTimeOfRegistration())
-                            .telegramUserId(user.getId())
+                            .testStartTime(telegramUser.getTimeOfRegistration())
+                            .telegramUserId(telegramUser.getTelegramId())
                             .build();
                     return answerRepository.save(answer);
                 })

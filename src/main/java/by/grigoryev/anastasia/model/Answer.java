@@ -20,11 +20,14 @@ public class Answer {
     @Id
     private Long id;
 
+    @Column("first_name")
+    private String firstName;
+
     @Column("answer")
     private String message;
 
-    @Column("time_of_answer")
-    private LocalDateTime timeOfAnswer;
+    @Column("test_start_time")
+    private LocalDateTime testStartTime;
 
     @Column("telegram_user_id")
     private Long telegramUserId;
