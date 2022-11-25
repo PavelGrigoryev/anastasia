@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -110,20 +109,14 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 telegramButtonsService.clearKeys();
                 addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
                         "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
-                answerService.save(user, resultsBuilderService.showResults()).subscribe();
-                sendText(user.getId(), resultsBuilderService.showResults());
+                answerService.save(user, resultsBuilderService.saveResults())
+                        .subscribe(answer -> sendText(user.getId(), answer.getMessage()));
                 resultsBuilderService.clearResults();
             }
 
             default -> sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
         }
-
-        AnswerCallbackQuery close = AnswerCallbackQuery.builder()
-                .callbackQueryId(callbackQuery.getId())
-                .build();
-
-        execute(close);
     }
 
     @SneakyThrows

@@ -21,7 +21,7 @@ public class ResultsBuilderServiceImpl implements ResultsBuilderService {
     }
 
     @Override
-    public String showResults() {
+    public String saveResults() {
         return resultsBuilder.toString();
     }
 

@@ -6,7 +6,7 @@ public interface ResultsBuilderService {
 
     Mono<StringBuilder> buildResults(String action, String name);
 
-    String showResults();
+    String saveResults();
 
     void clearResults();
 
