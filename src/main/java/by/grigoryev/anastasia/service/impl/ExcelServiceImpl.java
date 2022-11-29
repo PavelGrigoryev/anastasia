@@ -1,5 +1,7 @@
 package by.grigoryev.anastasia.service.impl;
 
+import by.grigoryev.anastasia.model.Answer;
+import by.grigoryev.anastasia.model.TelegramUser;
 import by.grigoryev.anastasia.repository.AnswerRepository;
 import by.grigoryev.anastasia.repository.TelegramUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +54,7 @@ public class ExcelServiceImpl {
 
             CellStyle thickBorderLeftStyle = workbook.createCellStyle();
             thickBorderLeftStyle.setBorderLeft(BorderStyle.THICK);
+            thickBorderLeftStyle.setRotation((short) 90);
 
             Row answerRow = sheet.createRow(1);
             answerRow.setHeight((short) 1200);
@@ -112,17 +115,78 @@ public class ExcelServiceImpl {
             answerCell = answerRow.createCell(16);
             answerCell.setCellStyle(thickBorderLeftStyle);
 
-            /*telegramUserRepository.findAll()
-                    .subscribe(telegramUser -> {
-                        Row informationRow = sheet.createRow(Math.toIntExact(telegramUser.getId() + 1));
+            for (TelegramUser telegramUser : telegramUserRepository.findAll()) {
+                Row informationRow = sheet.createRow(Math.toIntExact(telegramUser.getId() + 1));
 
-                        Cell informationCell = informationRow.createCell(0);
-                        informationCell.setCellValue(telegramUser.getFirstName());
+                Cell informationCell = informationRow.createCell(0);
+                informationCell.setCellValue(telegramUser.getFirstName());
 
-                        informationCell = informationRow.createCell(1);
-                        informationCell.setCellValue(telegramUser.getTelegramId());
-                    });*/
+                informationCell = informationRow.createCell(1);
+                informationCell.setCellValue(telegramUser.getTelegramId());
 
+                for (Answer answer : answerRepository.findAllByForeignKeyIdOrderById(telegramUser.getId())) {
+                    switch (answer.getMessage()) {
+                        case "1/1" -> {
+                            informationCell = informationRow.createCell(2);
+                            informationCell.setCellValue(1);
+                        }
+                        case "1/2" -> {
+                            informationCell = informationRow.createCell(3);
+                            informationCell.setCellValue(1);
+                        }
+                        case "1/3" -> {
+                            informationCell = informationRow.createCell(4);
+                            informationCell.setCellValue(1);
+                        }
+                        case "1/4" -> {
+                            informationCell = informationRow.createCell(5);
+                            informationCell.setCellValue(1);
+                        }
+                        case "1/5" -> {
+                            informationCell = informationRow.createCell(6);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/1" -> {
+                            informationCell = informationRow.createCell(7);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/2" -> {
+                            informationCell = informationRow.createCell(8);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/3" -> {
+                            informationCell = informationRow.createCell(9);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/4" -> {
+                            informationCell = informationRow.createCell(10);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/5" -> {
+                            informationCell = informationRow.createCell(11);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/6" -> {
+                            informationCell = informationRow.createCell(12);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/7" -> {
+                            informationCell = informationRow.createCell(13);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/8" -> {
+                            informationCell = informationRow.createCell(14);
+                            informationCell.setCellValue(1);
+                        }
+                        case "2/9" -> {
+                            informationCell = informationRow.createCell(15);
+                            informationCell.setCellValue(1);
+                        }
+                        default -> log.warn("Unexpected value: " + answer.getMessage());
+                    }
+                }
+
+            }
 
             File currDir = new File(".");
             String path = currDir.getAbsolutePath();
@@ -130,6 +194,7 @@ public class ExcelServiceImpl {
 
             FileOutputStream outputStream = new FileOutputStream(fileLocation, true);
             workbook.write(outputStream);
+            log.info("ExcelServiceImpl createSheet " + workbook);
             outputStream.close();
 
         } catch (IOException e) {

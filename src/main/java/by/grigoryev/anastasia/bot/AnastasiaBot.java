@@ -116,8 +116,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 telegramButtonsService.clearKeys();
                 addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
                         "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
-              /*  answerService.save(user, resultsBuilderService.saveResults())
-                        .subscribe(answer -> sendText(user.getId(), answer.getMessage()));*/
+
                 resultsBuilderService.clearResults();
                 excelService.createSheet();
             }
