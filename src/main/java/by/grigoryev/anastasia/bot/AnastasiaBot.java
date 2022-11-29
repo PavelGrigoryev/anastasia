@@ -4,6 +4,7 @@ import by.grigoryev.anastasia.service.AnswerService;
 import by.grigoryev.anastasia.service.ResultsBuilderService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
 import by.grigoryev.anastasia.service.TelegramUserService;
+import by.grigoryev.anastasia.service.impl.ExcelServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     private final AnswerService answerService;
 
     private final ResultsBuilderService resultsBuilderService;
+
+    private final ExcelServiceImpl excelService;
 
     @Override
     public String getBotUsername() {
@@ -83,9 +86,11 @@ public class AnastasiaBot extends TelegramLongPollingBot {
         log.warn("{} action: {}", user.getFirstName(), action);
 
         switch (action) {
-            case "newYear" -> telegramUserService.save(callbackQuery).subscribe(telegramUser ->
-                    addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                            "\uD83E\uDD73 Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы? \uD83C\uDF89"));
+            case "newYear" -> {
+                telegramUserService.save(callbackQuery);
+                addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
+                        "\uD83E\uDD73 Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы? \uD83C\uDF89");
+            }
 
             case "next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
                     "\uD83E\uDD73 Будет ли в этом году в вашей компании празднование Нового года? \uD83C\uDF89");
@@ -94,7 +99,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                         "\uD83E\uDD73 Для чего сотрудникам компаний нужны Новогодние корпоративы? \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
-                resultsBuilderService.buildResults(action, user.getFirstName()).subscribe();
+                resultsBuilderService.buildResults(action, user.getFirstName());
+                answerService.save(user, action);
             }
 
             case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
@@ -102,16 +108,18 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
                         "\uD83E\uDD73 Что вам больше всего не нравится на новогодних корпоративах? \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
-                resultsBuilderService.buildResults(action, user.getFirstName()).subscribe();
+                resultsBuilderService.buildResults(action, user.getFirstName());
+                answerService.save(user, action);
             }
 
             case "end" -> {
                 telegramButtonsService.clearKeys();
                 addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
                         "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
-                answerService.save(user, resultsBuilderService.saveResults())
-                        .subscribe(answer -> sendText(user.getId(), answer.getMessage()));
+              /*  answerService.save(user, resultsBuilderService.saveResults())
+                        .subscribe(answer -> sendText(user.getId(), answer.getMessage()));*/
                 resultsBuilderService.clearResults();
+                excelService.createSheet();
             }
 
             default -> sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()

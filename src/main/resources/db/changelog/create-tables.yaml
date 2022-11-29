@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-telegram-users
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: telegram_users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: user_name
+                  type: varchar(30)
+              - column:
+                  name: first_name
+                  type: varchar(30)
+              - column:
+                  name: last_name
+                  type: varchar(30)
+              - column:
+                  name: time_of_registration
+                  type: timestamp
+              - column:
+                  name: language_code
+                  type: varchar(30)
+  - changeSet:
+      id: create-telegram-answers
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: telegram_answers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: first_name
+                  type: varchar(30)
+              - column:
+                  name: answer
+                  type: varchar(255)
+              - column:
+                  name: test_start_time
+                  type: timestamp
+              - column:
+                  name: telegram_user_id
+                  type: bigint
+              - column:
+                  name: fk_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_telegram_user_answers
+                    references: telegram_users(id)
