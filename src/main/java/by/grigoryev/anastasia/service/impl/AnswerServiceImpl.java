@@ -29,7 +29,7 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer = Answer.builder()
                 .firstName(telegramUser.getFirstName())
                 .message(message)
-                .testStartTime(LocalDateTime.now())
+                .answerTime(LocalDateTime.now())
                 .telegramUserId(telegramUser.getTelegramId())
                 .foreignKeyId(telegramUser.getId())
                 .build();

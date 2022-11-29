@@ -26,13 +26,13 @@ public class Answer {
     @Column(name = "answer")
     private String message;
 
-    @Column(name = "test_start_time")
-    private LocalDateTime testStartTime;
+    @Column(name = "answer_time")
+    private LocalDateTime answerTime;
 
-    @Column(name = "telegram_user_id")
+    @Column(name = "telegram_id")
     private Long telegramUserId;
 
-    @Column(name = "fk_id")
+    @Column(name = "telegram_user_id")
     private Long foreignKeyId;
 
 }

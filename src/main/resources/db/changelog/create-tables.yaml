@@ -52,13 +52,13 @@ databaseChangeLog:
                   name: answer
                   type: varchar(255)
               - column:
-                  name: test_start_time
+                  name: answer_time
                   type: timestamp
               - column:
-                  name: telegram_user_id
+                  name: telegram_id
                   type: bigint
               - column:
-                  name: fk_id
+                  name: telegram_user_id
                   type: bigint
                   constraints:
                     foreignKeyName: fk_telegram_user_answers

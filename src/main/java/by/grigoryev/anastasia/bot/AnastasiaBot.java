@@ -1,7 +1,6 @@
 package by.grigoryev.anastasia.bot;
 
 import by.grigoryev.anastasia.service.AnswerService;
-import by.grigoryev.anastasia.service.ResultsBuilderService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
 import by.grigoryev.anastasia.service.TelegramUserService;
 import by.grigoryev.anastasia.service.impl.ExcelServiceImpl;
@@ -35,8 +34,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     private final TelegramUserService telegramUserService;
 
     private final AnswerService answerService;
-
-    private final ResultsBuilderService resultsBuilderService;
 
     private final ExcelServiceImpl excelService;
 
@@ -99,7 +96,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                         "\uD83E\uDD73 Для чего сотрудникам компаний нужны Новогодние корпоративы? \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
-                resultsBuilderService.buildResults(action, user.getFirstName());
                 answerService.save(user, action);
             }
 
@@ -108,7 +104,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
                         "\uD83E\uDD73 Что вам больше всего не нравится на новогодних корпоративах? \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
-                resultsBuilderService.buildResults(action, user.getFirstName());
                 answerService.save(user, action);
             }
 
@@ -116,8 +111,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 telegramButtonsService.clearKeys();
                 addEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
                         "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
-
-                resultsBuilderService.clearResults();
                 excelService.createSheet();
             }
 
