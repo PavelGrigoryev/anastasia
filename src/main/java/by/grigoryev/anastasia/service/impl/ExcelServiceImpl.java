@@ -1,5 +1,7 @@
 package by.grigoryev.anastasia.service.impl;
 
+import by.grigoryev.anastasia.configuration.TestAnswers;
+import by.grigoryev.anastasia.configuration.TestQuestions;
 import by.grigoryev.anastasia.model.Answer;
 import by.grigoryev.anastasia.model.TelegramUser;
 import by.grigoryev.anastasia.repository.AnswerRepository;
@@ -25,6 +27,10 @@ public class ExcelServiceImpl implements ExcelService {
     private final AnswerRepository answerRepository;
 
     private final TelegramUserRepository telegramUserRepository;
+
+    private final TestQuestions testQuestions;
+
+    private final TestAnswers testAnswers;
 
     @Override
     public void createSheet() {
@@ -56,6 +62,11 @@ public class ExcelServiceImpl implements ExcelService {
         sheet.setDefaultColumnWidth(3);
         sheet.setColumnWidth(0, 3000);
         sheet.setColumnWidth(1, 3000);
+        sheet.setColumnWidth(2, 950);
+        sheet.setColumnWidth(7, 950);
+        sheet.setColumnWidth(16, 950);
+        sheet.setColumnWidth(21, 950);
+        sheet.setColumnWidth(35, 950);
 
         CellStyle columnStyle = workbook.createCellStyle();
         columnStyle.setBorderLeft(BorderStyle.THICK);
@@ -75,23 +86,23 @@ public class ExcelServiceImpl implements ExcelService {
         return sheet;
     }
 
-    private static void addQuestions(Sheet sheet) {
+    private void addQuestions(Sheet sheet) {
         Row questionRow = sheet.createRow(0);
 
         Cell questionCell = questionRow.createCell(2);
-        questionCell.setCellValue("Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы?");
+        questionCell.setCellValue(testQuestions.getQuestion1());
 
         questionCell = questionRow.createCell(7);
-        questionCell.setCellValue("Для чего сотрудникам компаний нужны Новогодние корпоративы?");
+        questionCell.setCellValue(testQuestions.getQuestion2());
 
         questionCell = questionRow.createCell(16);
-        questionCell.setCellValue("Будет ли в этом году в вашей компании празднование Нового года?");
+        questionCell.setCellValue(testQuestions.getQuestion3());
 
         questionCell = questionRow.createCell(21);
-        questionCell.setCellValue("Что вам больше всего не нравится на новогодних корпоративах?");
+        questionCell.setCellValue(testQuestions.getQuestion4());
     }
 
-    private static void addAnswers(XSSFWorkbook workbook, Sheet sheet) {
+    private void addAnswers(XSSFWorkbook workbook, Sheet sheet) {
         CellStyle answerRowStyle = workbook.createCellStyle();
         answerRowStyle.setRotation((short) 90);
 
@@ -114,26 +125,25 @@ public class ExcelServiceImpl implements ExcelService {
         answerCell.setCellStyle(defaultStyle);
 
         answerCell = answerRow.createCell(2);
-        answerCell.setCellValue("Да");
+        answerCell.setCellValue(testAnswers.getYes());
         answerCell.setCellStyle(thickBorderLeftStyle);
 
         int i = 3;
-        for (String answer : List.of("Скорее, да", "Не знаю", "Скорее, нет", "Нет")) {
+        for (String answer : List.of(testAnswers.getProbablyYes(), testAnswers.getDontKnow(),
+                testAnswers.getProbablyNO(), testAnswers.getNot())) {
             answerCell = answerRow.createCell(i);
             answerCell.setCellValue(answer);
             i++;
         }
 
         answerCell = answerRow.createCell(7);
-        answerCell.setCellValue("Они сближают сотрудников");
+        answerCell.setCellValue(testAnswers.getAnswer2n1());
         answerCell.setCellStyle(thickBorderLeftStyle);
 
         for (String answer : List.of(
-                "Улучшают их коммуникацию в дальнейшем",
-                "Повышают лояльность сотрудников к компании", "Позволяют чувствовать себя единой командой",
-                "Позволяют пообщаться в неформальной обстановке", "Это награда от компании за хорошую работу",
-                "Неформально подвести итоги года", "Чисто побухать и оттянуться по полной на халяву",
-                "Сотрудникам не нужны Новогодние корпоративы"
+                testAnswers.getAnswer2n2(), testAnswers.getAnswer2n3(), testAnswers.getAnswer2n4(),
+                testAnswers.getAnswer2n5(), testAnswers.getAnswer2n6(), testAnswers.getAnswer2n7(),
+                testAnswers.getAnswer2n8(), testAnswers.getAnswer2n9()
         )) {
             answerCell = answerRow.createCell(i + 1);
             answerCell.setCellValue(answer);
@@ -141,25 +151,26 @@ public class ExcelServiceImpl implements ExcelService {
         }
 
         answerCell = answerRow.createCell(16);
-        answerCell.setCellValue("Да");
+        answerCell.setCellValue(testAnswers.getYes());
         answerCell.setCellStyle(thickBorderLeftStyle);
 
-        for (String answer : List.of("Скорее, да", "Не знаю", "Скорее, нет", "Нет")) {
+        for (String answer : List.of(testAnswers.getProbablyYes(), testAnswers.getDontKnow(),
+                testAnswers.getProbablyNO(), testAnswers.getNot())) {
             answerCell = answerRow.createCell(i + 2);
             answerCell.setCellValue(answer);
             i++;
         }
 
         answerCell = answerRow.createCell(21);
-        answerCell.setCellValue("Мне всё не нравится на корпоративах");
+        answerCell.setCellValue(testAnswers.getAnswer4n1());
         answerCell.setCellStyle(thickBorderLeftStyle);
 
         for (String answer : List.of(
-                "Не нравится сдавать деньги на корпоративы", "Не нравится принимать участие в конкурсах",
-                "Не люблю говорить тосты", "Не трезвые коллеги", "Невозможно как следует расслабиться",
-                "Невозможность прийти со второй половинкой", "Беспокойство о том, как я выгляжу и что надеть",
-                "Мне всегда скучно на таких праздниках", "Отсутствие возможности отказаться от участия в корпоративе",
-                "Слишком много людей", "Нетрезвый начальник", "Недвусмысленные приставания коллег", "Другое"
+                testAnswers.getAnswer4n2(), testAnswers.getAnswer4n3(), testAnswers.getAnswer4n4(),
+                testAnswers.getAnswer4n5(), testAnswers.getAnswer4n6(), testAnswers.getAnswer4n7(),
+                testAnswers.getAnswer4n8(), testAnswers.getAnswer4n9(), testAnswers.getAnswer4n10(),
+                testAnswers.getAnswer4n11(), testAnswers.getAnswer4n12(), testAnswers.getAnswer4n13(),
+                testAnswers.getAnswer4n14()
         )) {
             answerCell = answerRow.createCell(i + 3);
             answerCell.setCellValue(answer);

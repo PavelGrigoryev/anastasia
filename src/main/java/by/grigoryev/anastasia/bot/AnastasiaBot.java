@@ -1,5 +1,6 @@
 package by.grigoryev.anastasia.bot;
 
+import by.grigoryev.anastasia.configuration.TestQuestions;
 import by.grigoryev.anastasia.service.AnswerService;
 import by.grigoryev.anastasia.service.ExcelService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
@@ -23,11 +24,14 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 @RequiredArgsConstructor
 public class AnastasiaBot extends TelegramLongPollingBot {
 
+    public static final String EMOJI = "\uD83E\uDD73 ";
     @Value("${bot.name}")
     private String botName;
 
     @Value("${bot.token}")
     private String botToken;
+
+    private final TestQuestions testQuestions;
 
     private final TelegramButtonsService telegramButtonsService;
 
@@ -86,15 +90,15 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "newYear" -> {
                 telegramUserService.save(callbackQuery);
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestFirstButtons(),
-                        "\uD83E\uDD73 Как вы считаете, сотрудникам компаний нужны Новогодние корпоративы? \uD83C\uDF89");
+                        EMOJI + testQuestions.getQuestion1() + " \uD83C\uDF89");
             }
 
             case "next" -> addEditMessage(callbackQuery, telegramButtonsService.newYearTestThirdButtons(),
-                    "\uD83E\uDD73 Будет ли в этом году в вашей компании празднование Нового года? \uD83C\uDF89");
+                    EMOJI + testQuestions.getQuestion3() + " \uD83C\uDF89");
 
             case "1/1", "1/2", "1/3", "1/4", "1/5", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9" -> {
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
-                        "\uD83E\uDD73 Для чего сотрудникам компаний нужны Новогодние корпоративы? \uD83E\uDD73" +
+                        EMOJI + testQuestions.getQuestion2() + " \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
                 answerService.save(user, action);
             }
@@ -102,7 +106,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
             case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
                     "4/10", "4/11", "4/12", "4/13", "4/14" -> {
                 addEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
-                        "\uD83E\uDD73 Что вам больше всего не нравится на новогодних корпоративах? \uD83E\uDD73" +
+                        EMOJI + testQuestions.getQuestion4() + " \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
                 answerService.save(user, action);
             }

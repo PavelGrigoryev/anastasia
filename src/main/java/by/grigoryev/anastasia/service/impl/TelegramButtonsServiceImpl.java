@@ -1,6 +1,9 @@
 package by.grigoryev.anastasia.service.impl;
 
+import by.grigoryev.anastasia.configuration.TestAnswers;
+import by.grigoryev.anastasia.configuration.TestNumbers;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -12,10 +15,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class TelegramButtonsServiceImpl implements TelegramButtonsService {
 
     @Value("${api.url}")
     private String url;
+
+    private final TestAnswers testAnswers;
+
+    private final TestNumbers testNumbers;
 
     private final List<String> keys = new ArrayList<>();
 
@@ -55,11 +63,11 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("1/1", "1️⃣  Да");
-        buttons.put("1/2", "2️⃣  Скорее, да");
-        buttons.put("1/3", "3️⃣  Не знаю");
-        buttons.put("1/4", "4️⃣  Скорее, нет");
-        buttons.put("1/5", "5️⃣  Нет");
+        buttons.put("1/1", testNumbers.getNumber1() + testAnswers.getYes());
+        buttons.put("1/2", testNumbers.getNumber2() + testAnswers.getProbablyYes());
+        buttons.put("1/3", testNumbers.getNumber3() + testAnswers.getDontKnow());
+        buttons.put("1/4", testNumbers.getNumber4() + testAnswers.getProbablyNO());
+        buttons.put("1/5", testNumbers.getNumber5() + testAnswers.getNot());
 
         createButtons(buttons, buttonList);
 
@@ -71,15 +79,15 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("2/1", "1️⃣  Они сближают сотрудников");
-        buttons.put("2/2", "2️⃣  Улучшают их коммуникацию в дальнейшем");
-        buttons.put("2/3", "3️⃣  Повышают лояльность сотрудников к компании");
-        buttons.put("2/4", "4️⃣  Позволяют чувствовать себя единой командой");
-        buttons.put("2/5", "5️⃣  Позволяют пообщаться в неформальной обстановке");
-        buttons.put("2/6", "6️⃣  Это награда от компании за хорошую работу");
-        buttons.put("2/7", "7️⃣  Неформально подвести итоги года");
-        buttons.put("2/8", "8️⃣  Чисто побухать и оттянуться по полной на халяву");
-        buttons.put("2/9", "9️⃣  Сотрудникам не нужны Новогодние корпоративы");
+        buttons.put("2/1", testNumbers.getNumber1() + testAnswers.getAnswer2n1());
+        buttons.put("2/2", testNumbers.getNumber2() + testAnswers.getAnswer2n2());
+        buttons.put("2/3", testNumbers.getNumber3() + testAnswers.getAnswer2n3());
+        buttons.put("2/4", testNumbers.getNumber4() + testAnswers.getAnswer2n4());
+        buttons.put("2/5", testNumbers.getNumber5() + testAnswers.getAnswer2n5());
+        buttons.put("2/6", testNumbers.getNumber6() + testAnswers.getAnswer2n6());
+        buttons.put("2/7", testNumbers.getNumber7() + testAnswers.getAnswer2n7());
+        buttons.put("2/8", testNumbers.getNumber8() + testAnswers.getAnswer2n8());
+        buttons.put("2/9", testNumbers.getNumber9() + testAnswers.getAnswer2n9());
         if (key.equals("2/1") || key.equals("2/2") || key.equals("2/3") || key.equals("2/4") || key.equals("2/5") ||
                 key.equals("2/6") || key.equals("2/7") || key.equals("2/8") || key.equals("2/9")) {
             buttons.put("next", "\uD83D\uDEAB Перейти к следующему вопросу");
@@ -98,11 +106,11 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("3/1", "1️⃣  Да");
-        buttons.put("3/2", "2️⃣  Скорее, да");
-        buttons.put("3/3", "3️⃣  Не знаю");
-        buttons.put("3/4", "4️⃣  Скорее, нет");
-        buttons.put("3/5", "5️⃣  Нет");
+        buttons.put("3/1", testNumbers.getNumber1() + testAnswers.getYes());
+        buttons.put("3/2", testNumbers.getNumber2() + testAnswers.getProbablyYes());
+        buttons.put("3/3", testNumbers.getNumber3() + testAnswers.getDontKnow());
+        buttons.put("3/4", testNumbers.getNumber4() + testAnswers.getProbablyNO());
+        buttons.put("3/5", testNumbers.getNumber5() + testAnswers.getNot());
 
         createButtons(buttons, buttonList);
 
@@ -114,20 +122,20 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         Map<String, String> buttons = new LinkedHashMap<>();
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
 
-        buttons.put("4/1", "1️⃣  Мне всё не нравится на корпоративах");
-        buttons.put("4/2", "2️⃣  Не нравится сдавать деньги на корпоративы");
-        buttons.put("4/3", "3️⃣  Не нравится принимать участие в конкурсах");
-        buttons.put("4/4", "4️⃣  Не люблю говорить тосты");
-        buttons.put("4/5", "5️⃣  Не трезвые коллеги");
-        buttons.put("4/6", "6️⃣  Невозможно как следует расслабиться");
-        buttons.put("4/7", "7️⃣  Невозможность прийти со второй половинкой");
-        buttons.put("4/8", "8️⃣  Беспокойство о том, как я выгляжу и что надеть");
-        buttons.put("4/9", "9️⃣  Мне всегда скучно на таких праздниках");
-        buttons.put("4/10", "1️⃣0️⃣  Отсутствие возможности отказаться от участия в корпоративе");
-        buttons.put("4/11", "1️⃣1️⃣  Слишком много людей");
-        buttons.put("4/12", "1️⃣2️⃣  Нетрезвый начальник");
-        buttons.put("4/13", "1️⃣3️⃣  Недвусмысленные приставания коллег");
-        buttons.put("4/14", "1️⃣4️⃣  Другое");
+        buttons.put("4/1", testNumbers.getNumber1() + testAnswers.getAnswer4n1());
+        buttons.put("4/2", testNumbers.getNumber2() + testAnswers.getAnswer4n2());
+        buttons.put("4/3", testNumbers.getNumber3() + testAnswers.getAnswer4n3());
+        buttons.put("4/4", testNumbers.getNumber4() + testAnswers.getAnswer4n4());
+        buttons.put("4/5", testNumbers.getNumber5() + testAnswers.getAnswer4n5());
+        buttons.put("4/6", testNumbers.getNumber6() + testAnswers.getAnswer4n6());
+        buttons.put("4/7", testNumbers.getNumber7() + testAnswers.getAnswer4n7());
+        buttons.put("4/8", testNumbers.getNumber8() + testAnswers.getAnswer4n8());
+        buttons.put("4/9", testNumbers.getNumber9() + testAnswers.getAnswer4n9());
+        buttons.put("4/10", testNumbers.getNumber10() + testAnswers.getAnswer4n10());
+        buttons.put("4/11", testNumbers.getNumber11() + testAnswers.getAnswer4n11());
+        buttons.put("4/12", testNumbers.getNumber12() + testAnswers.getAnswer4n12());
+        buttons.put("4/13", testNumbers.getNumber13() + testAnswers.getAnswer4n13());
+        buttons.put("4/14", testNumbers.getNumber14() + testAnswers.getAnswer4n14());
         if (key.equals("4/1") || key.equals("4/2") || key.equals("4/3") || key.equals("4/4") || key.equals("4/5") ||
                 key.equals("4/6") || key.equals("4/7") || key.equals("4/8") || key.equals("4/9") || key.equals("4/10")
                 || key.equals("4/11") || key.equals("4/12") || key.equals("4/13") || key.equals("4/14")) {
