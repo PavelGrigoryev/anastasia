@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -116,104 +117,54 @@ public class ExcelServiceImpl implements ExcelService {
         answerCell.setCellValue("Да");
         answerCell.setCellStyle(thickBorderLeftStyle);
 
-        answerCell = answerRow.createCell(3);
-        answerCell.setCellValue("Скорее, да");
-
-        answerCell = answerRow.createCell(4);
-        answerCell.setCellValue("Не знаю");
-
-        answerCell = answerRow.createCell(5);
-        answerCell.setCellValue("Скорее, нет");
-
-        answerCell = answerRow.createCell(6);
-        answerCell.setCellValue("Нет");
+        int i = 3;
+        for (String answer : List.of("Скорее, да", "Не знаю", "Скорее, нет", "Нет")) {
+            answerCell = answerRow.createCell(i);
+            answerCell.setCellValue(answer);
+            i++;
+        }
 
         answerCell = answerRow.createCell(7);
         answerCell.setCellValue("Они сближают сотрудников");
         answerCell.setCellStyle(thickBorderLeftStyle);
 
-        answerCell = answerRow.createCell(8);
-        answerCell.setCellValue("Улучшают их коммуникацию в дальнейшем");
-
-        answerCell = answerRow.createCell(9);
-        answerCell.setCellValue("Повышают лояльность сотрудников к компании");
-
-        answerCell = answerRow.createCell(10);
-        answerCell.setCellValue("Позволяют чувствовать себя единой командой");
-
-        answerCell = answerRow.createCell(11);
-        answerCell.setCellValue("Позволяют пообщаться в неформальной обстановке");
-
-        answerCell = answerRow.createCell(12);
-        answerCell.setCellValue("Это награда от компании за хорошую работу");
-
-        answerCell = answerRow.createCell(13);
-        answerCell.setCellValue("Неформально подвести итоги года");
-
-        answerCell = answerRow.createCell(14);
-        answerCell.setCellValue("Чисто побухать и оттянуться по полной на халяву");
-
-        answerCell = answerRow.createCell(15);
-        answerCell.setCellValue("Сотрудникам не нужны Новогодние корпоративы");
+        for (String answer : List.of(
+                "Улучшают их коммуникацию в дальнейшем",
+                "Повышают лояльность сотрудников к компании", "Позволяют чувствовать себя единой командой",
+                "Позволяют пообщаться в неформальной обстановке", "Это награда от компании за хорошую работу",
+                "Неформально подвести итоги года", "Чисто побухать и оттянуться по полной на халяву",
+                "Сотрудникам не нужны Новогодние корпоративы"
+        )) {
+            answerCell = answerRow.createCell(i + 1);
+            answerCell.setCellValue(answer);
+            i++;
+        }
 
         answerCell = answerRow.createCell(16);
         answerCell.setCellValue("Да");
         answerCell.setCellStyle(thickBorderLeftStyle);
 
-        answerCell = answerRow.createCell(17);
-        answerCell.setCellValue("Скорее, да");
-
-        answerCell = answerRow.createCell(18);
-        answerCell.setCellValue("Не знаю");
-
-        answerCell = answerRow.createCell(19);
-        answerCell.setCellValue("Скорее, нет");
-
-        answerCell = answerRow.createCell(20);
-        answerCell.setCellValue("Нет");
+        for (String answer : List.of("Скорее, да", "Не знаю", "Скорее, нет", "Нет")) {
+            answerCell = answerRow.createCell(i + 2);
+            answerCell.setCellValue(answer);
+            i++;
+        }
 
         answerCell = answerRow.createCell(21);
         answerCell.setCellValue("Мне всё не нравится на корпоративах");
         answerCell.setCellStyle(thickBorderLeftStyle);
 
-        answerCell = answerRow.createCell(22);
-        answerCell.setCellValue("Не нравится сдавать деньги на корпоративы");
-
-        answerCell = answerRow.createCell(23);
-        answerCell.setCellValue("Не нравится принимать участие в конкурсах");
-
-        answerCell = answerRow.createCell(24);
-        answerCell.setCellValue("Не люблю говорить тосты");
-
-        answerCell = answerRow.createCell(25);
-        answerCell.setCellValue("Не трезвые коллеги");
-
-        answerCell = answerRow.createCell(26);
-        answerCell.setCellValue("Невозможно как следует расслабиться");
-
-        answerCell = answerRow.createCell(27);
-        answerCell.setCellValue("Невозможность прийти со второй половинкой");
-
-        answerCell = answerRow.createCell(28);
-        answerCell.setCellValue("Беспокойство о том, как я выгляжу и что надеть");
-
-        answerCell = answerRow.createCell(29);
-        answerCell.setCellValue("Мне всегда скучно на таких праздниках");
-
-        answerCell = answerRow.createCell(30);
-        answerCell.setCellValue("Отсутствие возможности отказаться от участия в корпоративе");
-
-        answerCell = answerRow.createCell(31);
-        answerCell.setCellValue("Слишком много людей");
-
-        answerCell = answerRow.createCell(32);
-        answerCell.setCellValue("Нетрезвый начальник");
-
-        answerCell = answerRow.createCell(33);
-        answerCell.setCellValue("Недвусмысленные приставания коллег");
-
-        answerCell = answerRow.createCell(34);
-        answerCell.setCellValue("Другое");
+        for (String answer : List.of(
+                "Не нравится сдавать деньги на корпоративы", "Не нравится принимать участие в конкурсах",
+                "Не люблю говорить тосты", "Не трезвые коллеги", "Невозможно как следует расслабиться",
+                "Невозможность прийти со второй половинкой", "Беспокойство о том, как я выгляжу и что надеть",
+                "Мне всегда скучно на таких праздниках", "Отсутствие возможности отказаться от участия в корпоративе",
+                "Слишком много людей", "Нетрезвый начальник", "Недвусмысленные приставания коллег", "Другое"
+        )) {
+            answerCell = answerRow.createCell(i + 3);
+            answerCell.setCellValue(answer);
+            i++;
+        }
 
         answerCell = answerRow.createCell(35);
         answerCell.setCellStyle(thickBorderLeftStyle);
