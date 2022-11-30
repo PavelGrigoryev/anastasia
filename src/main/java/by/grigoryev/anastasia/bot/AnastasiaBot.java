@@ -1,9 +1,9 @@
 package by.grigoryev.anastasia.bot;
 
 import by.grigoryev.anastasia.service.AnswerService;
+import by.grigoryev.anastasia.service.ExcelService;
 import by.grigoryev.anastasia.service.TelegramButtonsService;
 import by.grigoryev.anastasia.service.TelegramUserService;
-import by.grigoryev.anastasia.service.impl.ExcelServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
     private final AnswerService answerService;
 
-    private final ExcelServiceImpl excelService;
+    private final ExcelService excelService;
 
     @Override
     public String getBotUsername() {

@@ -4,6 +4,7 @@ import by.grigoryev.anastasia.model.Answer;
 import by.grigoryev.anastasia.model.TelegramUser;
 import by.grigoryev.anastasia.repository.AnswerRepository;
 import by.grigoryev.anastasia.repository.TelegramUserRepository;
+import by.grigoryev.anastasia.service.ExcelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -18,12 +19,13 @@ import java.io.IOException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ExcelServiceImpl {
+public class ExcelServiceImpl implements ExcelService {
 
     private final AnswerRepository answerRepository;
 
     private final TelegramUserRepository telegramUserRepository;
 
+    @Override
     public void createSheet() {
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             Sheet sheet = addSheet(workbook);
