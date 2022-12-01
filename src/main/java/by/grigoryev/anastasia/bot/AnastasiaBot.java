@@ -1,25 +1,20 @@
 package by.grigoryev.anastasia.bot;
 
 import by.grigoryev.anastasia.configuration.TestQuestions;
-import by.grigoryev.anastasia.service.AnswerService;
-import by.grigoryev.anastasia.service.ExcelService;
-import by.grigoryev.anastasia.service.TelegramButtonsService;
-import by.grigoryev.anastasia.service.TelegramUserService;
+import by.grigoryev.anastasia.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
-import org.telegram.telegrambots.meta.api.objects.*;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 @Slf4j
 @Component
@@ -33,6 +28,9 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String botToken;
 
+    @Value("${yandex.download.link.url}")
+    private String downloadLink;
+
     private final TestQuestions testQuestions;
 
     private final TelegramButtonsService telegramButtonsService;
@@ -42,6 +40,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
     private final AnswerService answerService;
 
     private final ExcelService excelService;
+
+    private final YandexDiskService yandexDiskService;
 
     @Override
     public String getBotUsername() {
@@ -117,29 +117,12 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 sendEditMessage(callbackQuery, telegramButtonsService.addMainButtons(),
                         "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
                 excelService.createSheet();
-                sendDocument(user.getId());
+                yandexDiskService.uploadByTheReceivedLink();
+                sendText(user.getId(), "Ссылка для скачивания :\n" + downloadLink);
             }
 
             default -> sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
-        }
-    }
-
-    private void sendDocument(Long who) {
-
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + "NewYearTest.xlsx";
-
-        try (FileInputStream stream = new FileInputStream(fileLocation)) {
-            InputFile inputFile = new InputFile(stream, "NewYearTestResult.xlsx");
-            log.info("AnastasiaBot sendDocument " + inputFile);
-            execute(SendDocument.builder()
-                    .chatId(who)
-                    .document(inputFile)
-                    .build());
-        } catch (TelegramApiException | IOException e) {
-            log.error(e.getMessage());
         }
     }
 

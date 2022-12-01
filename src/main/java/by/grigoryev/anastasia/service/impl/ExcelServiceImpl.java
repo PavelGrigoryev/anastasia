@@ -45,7 +45,7 @@ public class ExcelServiceImpl implements ExcelService {
 
             File currDir = new File(".");
             String path = currDir.getAbsolutePath();
-            String fileLocation = path.substring(0, path.length() - 1) + "newYearTest.xlsx";
+            String fileLocation = path.substring(0, path.length() - 1) + "NewYearTestResults.xlsx";
 
             FileOutputStream outputStream = new FileOutputStream(fileLocation);
             workbook.write(outputStream);
