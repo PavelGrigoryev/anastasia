@@ -2,7 +2,7 @@ package by.grigoryev.anastasia.service.impl;
 
 import by.grigoryev.anastasia.configuration.TestAnswers;
 import by.grigoryev.anastasia.configuration.TestQuestions;
-import by.grigoryev.anastasia.model.Answer;
+import by.grigoryev.anastasia.model.TelegramAnswer;
 import by.grigoryev.anastasia.model.TelegramUser;
 import by.grigoryev.anastasia.repository.AnswerRepository;
 import by.grigoryev.anastasia.repository.TelegramUserRepository;
@@ -191,8 +191,8 @@ public class ExcelServiceImpl implements ExcelService {
             resultCell = resultRow.createCell(1);
             resultCell.setCellValue(telegramUser.getTelegramId());
 
-            for (Answer answer : answerRepository.findAllByForeignKeyIdOrderById(telegramUser.getId())) {
-                String action = answer.getMessage();
+            for (TelegramAnswer telegramAnswer : answerRepository.findAllByForeignKeyIdOrderById(telegramUser.getId())) {
+                String action = telegramAnswer.getMessage();
                 switch (action) {
                     case "1/1", "1/2", "1/3", "1/4", "1/5" -> {
                         resultCell = resultRow.createCell(Integer.parseInt(action.substring(2)) + 1);
@@ -211,7 +211,7 @@ public class ExcelServiceImpl implements ExcelService {
                         resultCell = resultRow.createCell(Integer.parseInt(action.substring(2)) + 20);
                         resultCell.setCellValue(1);
                     }
-                    default -> log.warn("Unexpected value: " + answer.getMessage());
+                    default -> log.warn("Unexpected value: " + telegramAnswer.getMessage());
                 }
             }
         }

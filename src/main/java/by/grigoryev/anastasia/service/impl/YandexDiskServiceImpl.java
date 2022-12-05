@@ -39,7 +39,7 @@ public class YandexDiskServiceImpl implements YandexDiskService {
                         .accept(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromValue(stream.readAllBytes()))
                         .retrieve()
-                        .bodyToMono(String.class)
+                        .bodyToMono(Void.class)
                         .log("uploadByTheReceivedLink")
                         .block();
             } catch (IOException e) {

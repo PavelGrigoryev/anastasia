@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -37,7 +38,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
     private final TelegramUserService telegramUserService;
 
-    private final AnswerService answerService;
+    private final TelegramAnswerService telegramAnswerService;
 
     private final ExcelService excelService;
 
@@ -101,7 +102,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 sendEditMessage(callbackQuery, telegramButtonsService.newYearTestSecondButtons(action),
                         EMOJI + testQuestions.getQuestion2() + " \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
-                answerService.save(user, action);
+                telegramAnswerService.save(user, action);
             }
 
             case "3/1", "3/2", "3/3", "3/4", "3/5", "4/1", "4/2", "4/3", "4/4", "4/5", "4/6", "4/7", "4/8", "4/9",
@@ -109,7 +110,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 sendEditMessage(callbackQuery, telegramButtonsService.newYearTestFourthButtons(action),
                         EMOJI + testQuestions.getQuestion4() + " \uD83E\uDD73" +
                                 "\n⚠ Можно выбрать несколько вариантов! \uD83C\uDF89");
-                answerService.save(user, action);
+                telegramAnswerService.save(user, action);
             }
 
             case "end" -> {
@@ -123,6 +124,20 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
             default -> sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
+        }
+
+        closeCallbackQuery(callbackQuery);
+    }
+
+    private void closeCallbackQuery(CallbackQuery callbackQuery) {
+        AnswerCallbackQuery close = AnswerCallbackQuery.builder()
+                .callbackQueryId(callbackQuery.getId())
+                .build();
+
+        try {
+            execute(close);
+        } catch (TelegramApiException e) {
+            log.error(e.getMessage());
         }
     }
 

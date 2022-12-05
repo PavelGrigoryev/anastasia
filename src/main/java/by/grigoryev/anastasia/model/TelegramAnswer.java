@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "telegram_answers")
-public class Answer {
+public class TelegramAnswer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
