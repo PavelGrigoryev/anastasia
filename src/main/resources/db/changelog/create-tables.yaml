@@ -61,5 +61,83 @@ databaseChangeLog:
                   name: telegram_user_id
                   type: bigint
                   constraints:
-                    foreignKeyName: fk_telegram_user_answers
+                    foreignKeyName: fk_telegram_user_id
                     references: telegram_users(id)
+  - changeSet:
+      id: create-new_poll_titles
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_titles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: telegram_user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_telegram_user_id
+                    references: telegram_users(id)
+              - column:
+                  name: time_of_creation
+                  type: timestamp
+  - changeSet:
+      id: create-new_poll_questions
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_questions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: question
+                  type: varchar(255)
+              - column:
+                  name: telegram_user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_telegram_user_id
+                    references: telegram_users(id)
+              - column:
+                  name: time_of_creation
+                  type: timestamp
+  - changeSet:
+      id: create-new_poll_answers
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_answers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: answer
+                  type: varchar(255)
+              - column:
+                  name: telegram_user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_telegram_user_id
+                    references: telegram_users(id)
+              - column:
+                  name: time_of_creation
+                  type: timestamp

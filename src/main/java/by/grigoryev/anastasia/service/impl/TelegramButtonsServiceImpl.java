@@ -50,11 +50,17 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
                 .callbackData("newYear")
                 .build();
 
+        InlineKeyboardButton newPoll = InlineKeyboardButton.builder()
+                .text("Создать новый опрос")
+                .callbackData("newPoll")
+                .build();
+
         return InlineKeyboardMarkup.builder()
                 .keyboardRow(List.of(main))
                 .keyboardRow(List.of(register))
                 .keyboardRow(List.of(enter))
                 .keyboardRow(List.of(newYear))
+                .keyboardRow(List.of(newPoll))
                 .build();
     }
 

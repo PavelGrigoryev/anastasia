@@ -4,7 +4,7 @@ import by.grigoryev.anastasia.configuration.TestAnswers;
 import by.grigoryev.anastasia.configuration.TestQuestions;
 import by.grigoryev.anastasia.model.TelegramAnswer;
 import by.grigoryev.anastasia.model.TelegramUser;
-import by.grigoryev.anastasia.repository.AnswerRepository;
+import by.grigoryev.anastasia.repository.TelegramAnswerRepository;
 import by.grigoryev.anastasia.repository.TelegramUserRepository;
 import by.grigoryev.anastasia.service.ExcelService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExcelServiceImpl implements ExcelService {
 
-    private final AnswerRepository answerRepository;
+    private final TelegramAnswerRepository telegramAnswerRepository;
 
     private final TelegramUserRepository telegramUserRepository;
 
@@ -191,7 +191,7 @@ public class ExcelServiceImpl implements ExcelService {
             resultCell = resultRow.createCell(1);
             resultCell.setCellValue(telegramUser.getTelegramId());
 
-            for (TelegramAnswer telegramAnswer : answerRepository.findAllByForeignKeyIdOrderById(telegramUser.getId())) {
+            for (TelegramAnswer telegramAnswer : telegramAnswerRepository.findAllByForeignKeyIdOrderById(telegramUser.getId())) {
                 String action = telegramAnswer.getMessage();
                 switch (action) {
                     case "1/1", "1/2", "1/3", "1/4", "1/5" -> {

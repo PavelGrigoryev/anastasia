@@ -6,7 +6,6 @@ import by.grigoryev.anastasia.service.TelegramUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 import java.time.LocalDateTime;
@@ -19,14 +18,13 @@ public class TelegramUserServiceImpl implements TelegramUserService {
     private final TelegramUserRepository telegramUserRepository;
 
     @Override
-    public void save(CallbackQuery callbackQuery) {
-        TelegramUser telegramUser = createTelegramUser(callbackQuery);
+    public void save(User user) {
+        TelegramUser telegramUser = createTelegramUser(user);
         telegramUserRepository.save(telegramUser);
         log.info("TelegramUserServiceImpl save " + telegramUser);
     }
 
-    private static TelegramUser createTelegramUser(CallbackQuery callbackQuery) {
-        User user = callbackQuery.getFrom();
+    private static TelegramUser createTelegramUser(User user) {
         return TelegramUser.builder()
                 .telegramId(user.getId())
                 .userName(user.getUserName())

@@ -2,7 +2,7 @@ package by.grigoryev.anastasia.service.impl;
 
 import by.grigoryev.anastasia.model.TelegramAnswer;
 import by.grigoryev.anastasia.model.TelegramUser;
-import by.grigoryev.anastasia.repository.AnswerRepository;
+import by.grigoryev.anastasia.repository.TelegramAnswerRepository;
 import by.grigoryev.anastasia.repository.TelegramUserRepository;
 import by.grigoryev.anastasia.service.TelegramAnswerService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class TelegramAnswerServiceImpl implements TelegramAnswerService {
 
-    private final AnswerRepository answerRepository;
+    private final TelegramAnswerRepository telegramAnswerRepository;
 
     private final TelegramUserRepository telegramUserRepository;
 
@@ -34,7 +34,7 @@ public class TelegramAnswerServiceImpl implements TelegramAnswerService {
                 .foreignKeyId(telegramUser.getId())
                 .build();
 
-        answerRepository.save(telegramAnswer);
+        telegramAnswerRepository.save(telegramAnswer);
 
         log.info("TelegramAnswerServiceImpl save " + telegramAnswer);
     }

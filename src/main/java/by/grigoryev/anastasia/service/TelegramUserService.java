@@ -1,9 +1,9 @@
 package by.grigoryev.anastasia.service;
 
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.User;
 
 public interface TelegramUserService {
 
-    void save(CallbackQuery callbackQuery);
+    void save(User user);
 
 }
