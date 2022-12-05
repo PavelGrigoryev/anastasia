@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NewPollTitleRepository extends JpaRepository<NewPollTitle, Long> {
 
+    NewPollTitle findFirstByTelegramIdOrderByTimeOfCreationDesc(Long telegramId);
+
 }

@@ -22,6 +22,9 @@ public class NewPollTitle {
 
     private String title;
 
+    @Column(name = "telegram_id")
+    private Long telegramId;
+
     @Column(name = "telegram_user_id")
     private Long telegramUserId;
 

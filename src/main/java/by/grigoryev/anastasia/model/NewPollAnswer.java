@@ -22,8 +22,11 @@ public class NewPollAnswer {
 
     private String answer;
 
-    @Column(name = "telegram_user_id")
-    private Long telegramUserId;
+    @Column(name = "telegram_id")
+    private Long telegramId;
+
+    @Column(name = "new_poll_question_id")
+    private Long newPollQuestionId;
 
     @Column(name = "time_of_creation")
     private LocalDateTime timeOfCreation;

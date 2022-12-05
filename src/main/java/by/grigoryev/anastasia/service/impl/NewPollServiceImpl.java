@@ -34,6 +34,7 @@ public class NewPollServiceImpl implements NewPollService {
 
         NewPollTitle newPollTitle = NewPollTitle.builder()
                 .title(title)
+                .telegramId(telegramUser.getTelegramId())
                 .telegramUserId(telegramUser.getId())
                 .timeOfCreation(LocalDateTime.now())
                 .build();
@@ -45,11 +46,12 @@ public class NewPollServiceImpl implements NewPollService {
 
     @Override
     public void createQuestion(String question, Long telegramId) {
-        TelegramUser telegramUser = telegramUserRepository.findFirstByTelegramIdOrderByTimeOfRegistrationDesc(telegramId);
+        NewPollTitle newPollTitle = newPollTitleRepository.findFirstByTelegramIdOrderByTimeOfCreationDesc(telegramId);
 
         NewPollQuestion newPollQuestion = NewPollQuestion.builder()
                 .question(question)
-                .telegramUserId(telegramUser.getId())
+                .telegramId(newPollTitle.getTelegramId())
+                .newPollTitleId(newPollTitle.getId())
                 .timeOfCreation(LocalDateTime.now())
                 .build();
 
@@ -60,11 +62,12 @@ public class NewPollServiceImpl implements NewPollService {
 
     @Override
     public void createAnswer(String answer, Long telegramId) {
-        TelegramUser telegramUser = telegramUserRepository.findFirstByTelegramIdOrderByTimeOfRegistrationDesc(telegramId);
+        NewPollQuestion newPollQuestion = newPollQuestionRepository.findFirstByTelegramIdOrderByTimeOfCreationDesc(telegramId);
 
         NewPollAnswer newPollAnswer = NewPollAnswer.builder()
                 .answer(answer)
-                .telegramUserId(telegramUser.getId())
+                .telegramId(newPollQuestion.getTelegramId())
+                .newPollQuestionId(newPollQuestion.getId())
                 .timeOfCreation(LocalDateTime.now())
                 .build();
 

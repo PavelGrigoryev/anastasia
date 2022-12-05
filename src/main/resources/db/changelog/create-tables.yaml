@@ -81,6 +81,9 @@ databaseChangeLog:
                   name: title
                   type: varchar(255)
               - column:
+                  name: telegram_id
+                  type: bigint
+              - column:
                   name: telegram_user_id
                   type: bigint
                   constraints:
@@ -107,11 +110,14 @@ databaseChangeLog:
                   name: question
                   type: varchar(255)
               - column:
-                  name: telegram_user_id
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: new_poll_title_id
                   type: bigint
                   constraints:
-                    foreignKeyName: fk_telegram_user_id
-                    references: telegram_users(id)
+                    foreignKeyName: fk_new_poll_titles_id
+                    references: new_poll_titles(id)
               - column:
                   name: time_of_creation
                   type: timestamp
@@ -133,11 +139,14 @@ databaseChangeLog:
                   name: answer
                   type: varchar(255)
               - column:
-                  name: telegram_user_id
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: new_poll_question_id
                   type: bigint
                   constraints:
-                    foreignKeyName: fk_telegram_user_id
-                    references: telegram_users(id)
+                    foreignKeyName: fk_new_poll_questions_id
+                    references: new_poll_questions(id)
               - column:
                   name: time_of_creation
                   type: timestamp
