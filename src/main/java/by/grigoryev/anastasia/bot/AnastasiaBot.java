@@ -46,6 +46,8 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
     private final NewPollService newPollService;
 
+    private final NewPollExcelService newPollExcelService;
+
     @Override
     public String getBotUsername() {
         return botName;
@@ -77,7 +79,7 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 sendMenu(user.getId(), "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
 
             } else if (text.startsWith("title:")) {
-                telegramUserService.save(user);
+                newPollService.save(user);
                 String newPollTitle = text.substring(6).trim();
                 newPollService.createTitle(newPollTitle, user.getId());
                 log.warn(newPollTitle);
@@ -94,8 +96,13 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 String newPollAnswer = text.substring(7).trim();
                 newPollService.createAnswer(newPollAnswer, user.getId());
                 log.warn(newPollAnswer);
-                sendText(user.getId(), "Можете добавить ещё вариант ответа через команду answer:\n" +
-                        "Либо создать следующий вопрос через команду question:");
+                sendText(user.getId(), """
+                        Можете добавить ещё вариант ответа через команду answer:
+                        Либо создать следующий вопрос через команду question:
+                        Если хотите закончить команда /end""");
+
+            } else if ("/end".equals(text)) {
+                newPollExcelService.createSheet(user.getId());
 
             } else {
                 sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()

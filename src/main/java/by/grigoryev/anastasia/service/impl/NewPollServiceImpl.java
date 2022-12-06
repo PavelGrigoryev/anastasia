@@ -1,17 +1,12 @@
 package by.grigoryev.anastasia.service.impl;
 
-import by.grigoryev.anastasia.model.NewPollAnswer;
-import by.grigoryev.anastasia.model.NewPollQuestion;
-import by.grigoryev.anastasia.model.NewPollTitle;
-import by.grigoryev.anastasia.model.TelegramUser;
-import by.grigoryev.anastasia.repository.NewPollAnswerRepository;
-import by.grigoryev.anastasia.repository.NewPollQuestionRepository;
-import by.grigoryev.anastasia.repository.NewPollTitleRepository;
-import by.grigoryev.anastasia.repository.TelegramUserRepository;
+import by.grigoryev.anastasia.model.*;
+import by.grigoryev.anastasia.repository.*;
 import by.grigoryev.anastasia.service.NewPollService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.User;
 
 import java.time.LocalDateTime;
 
@@ -26,16 +21,16 @@ public class NewPollServiceImpl implements NewPollService {
 
     private final NewPollAnswerRepository newPollAnswerRepository;
 
-    private final TelegramUserRepository telegramUserRepository;
+    private final NewPollUserRepository newPollUserRepository;
 
     @Override
     public void createTitle(String title, Long telegramId) {
-        TelegramUser telegramUser = telegramUserRepository.findFirstByTelegramIdOrderByTimeOfRegistrationDesc(telegramId);
+        NewPollUser newPollUser = newPollUserRepository.findFirstByTelegramIdOrderByTimeOfRegistrationDesc(telegramId);
 
         NewPollTitle newPollTitle = NewPollTitle.builder()
                 .title(title)
-                .telegramId(telegramUser.getTelegramId())
-                .telegramUserId(telegramUser.getId())
+                .telegramId(newPollUser.getTelegramId())
+                .telegramUserId(newPollUser.getId())
                 .timeOfCreation(LocalDateTime.now())
                 .build();
 
@@ -74,6 +69,22 @@ public class NewPollServiceImpl implements NewPollService {
         newPollAnswerRepository.save(newPollAnswer);
 
         log.info("NewPollServiceImpl createAnswer " + newPollAnswer);
+    }
+
+    @Override
+    public void save(User user) {
+        NewPollUser newPollUser = NewPollUser.builder()
+                .telegramId(user.getId())
+                .userName(user.getUserName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .timeOfRegistration(LocalDateTime.now())
+                .languageCode(user.getLanguageCode())
+                .build();
+
+        newPollUserRepository.save(newPollUser);
+
+        log.info("NewPollServiceImpl save " + newPollUser);
     }
 
 }
