@@ -33,13 +33,15 @@ public class NewPollExcelServiceImpl implements NewPollExcelService {
     @Override
     public void createSheet(Long telegramId) {
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-            NewPollTitle newPollTitle = newPollTitleRepository.findFirstByTelegramIdOrderByTimeOfCreationDesc(telegramId);
+            List<NewPollTitle> newPollTitleList = newPollTitleRepository.findAllByTelegramId(telegramId);
 
-            addSheet(workbook, newPollTitle);
+            for (NewPollTitle newPollTitle : newPollTitleList) {
+                addSheet(workbook, newPollTitle);
+            }
 
             File currDir = new File(".");
             String path = currDir.getAbsolutePath();
-            String fileLocation = path.substring(0, path.length() - 1) + newPollTitle.getTitle() + ".xlsx";
+            String fileLocation = path.substring(0, path.length() - 1) + "Tests.xlsx";
 
             FileOutputStream outputStream = new FileOutputStream(fileLocation);
             workbook.write(outputStream);
@@ -80,7 +82,7 @@ public class NewPollExcelServiceImpl implements NewPollExcelService {
         int i = 0;
         int j = 2;
 
-        for (NewPollQuestion newPollQuestion : newPollQuestionRepository.findAll()) {
+        for (NewPollQuestion newPollQuestion : newPollQuestionRepository.findAllByNewPollTitleId(newPollTitle.getId())) {
             List<NewPollAnswer> answers = newPollAnswerRepository.findAllByNewPollQuestionId(newPollQuestion.getId());
             sheet.setDefaultColumnStyle(answers.size() + 2 + i, columnStyle);
             sheet.addMergedRegion(new CellRangeAddress(0, 0, i + 2, i + answers.size() + 1));
@@ -98,7 +100,7 @@ public class NewPollExcelServiceImpl implements NewPollExcelService {
             i = answers.size() + i;
         }
 
-        sheet.setAutoFilter(new CellRangeAddress(1, 1, 0, newPollAnswerRepository.findAll().size() + 1));
+        sheet.setAutoFilter(new CellRangeAddress(1, 1, 0, i + 1));
 
     }
 
