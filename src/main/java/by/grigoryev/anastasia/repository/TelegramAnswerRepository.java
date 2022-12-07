@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AnswerRepository extends JpaRepository<TelegramAnswer, Long> {
+public interface TelegramAnswerRepository extends JpaRepository<TelegramAnswer, Long> {
 
     List<TelegramAnswer> findAllByForeignKeyIdOrderById(Long id);
 
