@@ -61,5 +61,124 @@ databaseChangeLog:
                   name: telegram_user_id
                   type: bigint
                   constraints:
-                    foreignKeyName: fk_telegram_user_answers
+                    foreignKeyName: fk_telegram_user_id
                     references: telegram_users(id)
+  - changeSet:
+      id: create-new-poll-users
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: user_name
+                  type: varchar(30)
+              - column:
+                  name: first_name
+                  type: varchar(30)
+              - column:
+                  name: last_name
+                  type: varchar(30)
+              - column:
+                  name: time_of_registration
+                  type: timestamp
+              - column:
+                  name: language_code
+                  type: varchar(30)
+  - changeSet:
+      id: create-new-poll-titles
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_titles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: title
+                  type: varchar(255)
+              - column:
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: telegram_user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_new_poll_users_id
+                    references: new_poll_users(id)
+              - column:
+                  name: time_of_creation
+                  type: timestamp
+  - changeSet:
+      id: create-new-poll-questions
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_questions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: question
+                  type: varchar(255)
+              - column:
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: new_poll_title_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_new_poll_titles_id
+                    references: new_poll_titles(id)
+              - column:
+                  name: time_of_creation
+                  type: timestamp
+  - changeSet:
+      id: create-new-poll-answers
+      author: Pavel Grigoryev
+      changes:
+        - createTable:
+            tableName: new_poll_answers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+              - column:
+                  name: answer
+                  type: varchar(255)
+              - column:
+                  name: telegram_id
+                  type: bigint
+              - column:
+                  name: new_poll_question_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_new_poll_questions_id
+                    references: new_poll_questions(id)
+              - column:
+                  name: time_of_creation
+                  type: timestamp
