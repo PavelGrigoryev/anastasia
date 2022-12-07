@@ -44,10 +44,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
     private final YandexDiskService yandexDiskService;
 
-    private final NewPollService newPollService;
-
-    private final NewPollExcelService newPollExcelService;
-
     @Override
     public String getBotUsername() {
         return botName;
@@ -77,33 +73,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
 
             if ("/menu".equals(text) || "/start".equals(text)) {
                 sendMenu(user.getId(), "\uD83C\uDF89 Главное меню! Пользователь :  " + user.getFirstName());
-
-            } else if (text.startsWith("title:")) {
-                newPollService.save(user);
-                String newPollTitle = text.substring(6).trim();
-                newPollService.createTitle(newPollTitle, user.getId());
-                log.warn(newPollTitle);
-                sendText(user.getId(), "Введите вопрос через команду question:\n⚠ Пример ➡️ question:ваш вопрос");
-
-            } else if (text.startsWith("question:")) {
-                String newPollQuestion = text.substring(9).trim();
-                newPollService.createQuestion(newPollQuestion, user.getId());
-                log.warn(newPollQuestion);
-                sendText(user.getId(), "Введите ответ на этот вопрос через команду answer:\n⚠ Пример ➡️ " +
-                        "answer:ваш ответ");
-
-            } else if (text.startsWith("answer:")) {
-                String newPollAnswer = text.substring(7).trim();
-                newPollService.createAnswer(newPollAnswer, user.getId());
-                log.warn(newPollAnswer);
-                sendText(user.getId(), """
-                        Можете добавить ещё вариант ответа через команду answer:
-                        Либо создать следующий вопрос через команду question:
-                        Если хотите закончить команда /end""");
-
-            } else if ("/end".equals(text)) {
-                newPollExcelService.createSheet(user.getId());
-
             } else {
                 sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                         + "!\nДоступно пока только меню :\n/menu");
@@ -152,9 +121,6 @@ public class AnastasiaBot extends TelegramLongPollingBot {
                 yandexDiskService.uploadByTheReceivedLink();
                 sendText(user.getId(), "Ссылка для скачивания :\n" + downloadLink);
             }
-
-            case "newPoll" -> sendEditMessage(callbackQuery, null,
-                    "Введите название нового опроса через команду title:\n⚠ Пример ➡️ title:название опроса");
 
             default -> sendText(user.getId(), "\uD83C\uDF89 Приветствую вас, " + user.getFirstName()
                     + "!\nДоступно пока только меню :\n/menu");
