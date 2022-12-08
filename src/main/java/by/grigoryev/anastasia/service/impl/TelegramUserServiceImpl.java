@@ -18,10 +18,10 @@ public class TelegramUserServiceImpl implements TelegramUserService {
     private final TelegramUserRepository telegramUserRepository;
 
     @Override
-    public void save(User user) {
-        TelegramUser telegramUser = createTelegramUser(user);
-        telegramUserRepository.save(telegramUser);
+    public TelegramUser save(User user) {
+        TelegramUser telegramUser = telegramUserRepository.save(createTelegramUser(user));
         log.info("TelegramUserServiceImpl save " + telegramUser);
+        return telegramUser;
     }
 
     private static TelegramUser createTelegramUser(User user) {
