@@ -25,17 +25,18 @@ public class TelegramAnswerServiceImpl implements TelegramAnswerService {
     public void save(User user, String message) {
         TelegramUser telegramUser = telegramUserRepository
                 .findFirstByTelegramIdOrderByTimeOfRegistrationDesc(user.getId());
+        TelegramAnswer telegramAnswer = telegramAnswerRepository.save(createTelegramAnswer(message, telegramUser));
+        log.info("save " + telegramAnswer);
+    }
 
-        TelegramAnswer telegramAnswer = TelegramAnswer.builder()
+    private static TelegramAnswer createTelegramAnswer(String message, TelegramUser telegramUser) {
+        return TelegramAnswer.builder()
                 .firstName(telegramUser.getFirstName())
                 .message(message)
                 .answerTime(LocalDateTime.now())
                 .telegramUserId(telegramUser.getTelegramId())
                 .foreignKeyId(telegramUser.getId())
                 .build();
-
-        telegramAnswerRepository.save(telegramAnswer);
-
-        log.info("TelegramAnswerServiceImpl save " + telegramAnswer);
     }
+
 }

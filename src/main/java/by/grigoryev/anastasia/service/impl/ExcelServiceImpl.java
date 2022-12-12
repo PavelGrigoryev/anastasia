@@ -49,7 +49,7 @@ public class ExcelServiceImpl implements ExcelService {
 
             FileOutputStream outputStream = new FileOutputStream(fileLocation);
             workbook.write(outputStream);
-            log.info("ExcelServiceImpl createSheet " + workbook);
+            log.info("createSheet " + workbook);
             outputStream.close();
 
         } catch (IOException e) {

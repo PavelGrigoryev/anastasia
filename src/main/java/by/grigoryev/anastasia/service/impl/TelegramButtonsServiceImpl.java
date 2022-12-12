@@ -88,8 +88,8 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         buttons.put("2/7", testNumbers.getNumber7() + testAnswers.getAnswer2n7());
         buttons.put("2/8", testNumbers.getNumber8() + testAnswers.getAnswer2n8());
         buttons.put("2/9", testNumbers.getNumber9() + testAnswers.getAnswer2n9());
-        if (key.equals("2/1") || key.equals("2/2") || key.equals("2/3") || key.equals("2/4") || key.equals("2/5") ||
-                key.equals("2/6") || key.equals("2/7") || key.equals("2/8") || key.equals("2/9")) {
+
+        if (key.startsWith("2")) {
             buttons.put("next", "\uD83D\uDEAB Перейти к следующему вопросу");
             keys.add(key);
         }
@@ -136,9 +136,8 @@ public class TelegramButtonsServiceImpl implements TelegramButtonsService {
         buttons.put("4/12", testNumbers.getNumber12() + testAnswers.getAnswer4n12());
         buttons.put("4/13", testNumbers.getNumber13() + testAnswers.getAnswer4n13());
         buttons.put("4/14", testNumbers.getNumber14() + testAnswers.getAnswer4n14());
-        if (key.equals("4/1") || key.equals("4/2") || key.equals("4/3") || key.equals("4/4") || key.equals("4/5") ||
-                key.equals("4/6") || key.equals("4/7") || key.equals("4/8") || key.equals("4/9") || key.equals("4/10")
-                || key.equals("4/11") || key.equals("4/12") || key.equals("4/13") || key.equals("4/14")) {
+
+        if (key.startsWith("4")) {
             buttons.put("end", "\uD83D\uDEAB Закончить тест и получить результаты!");
             keys.add(key);
         }
